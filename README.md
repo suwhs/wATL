@@ -15,7 +15,7 @@ onClick() method receive view, span position, and coordinates of image within vi
 
 Full version 
 ========
-<a href="whs.su/?p=33">wATL Library on WHS.SU</a>
+<a href="http://whs.su/?p=33">wATL Library on WHS.SU</a>
 
 
 
