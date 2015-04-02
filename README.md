@@ -13,7 +13,11 @@ Published Classes
 - *su.whs.watl.ui.ClickableSpanListener - interface for easy handle clicks on drawable 
 onClick() method receive view, span position, and coordinates of image within view
 
-Full version 
+- *su.whs.watl.ui.TextViewEx - class with full text justification support (enabled by default)
+
+
+
+Commercial License
 ========
 <a href="http://whs.su/?p=33">wATL Library on WHS.SU</a>
 
