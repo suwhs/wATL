@@ -24,6 +24,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="su.whs.watl.samples.MainActivity" />
         </activity>
+        <activity
+            android:name=".TextViewExScrollActivity"
+            android:label="@string/title_activity_text_view_ex_scroll" >
+        </activity>
     </application>
 
 </manifest>

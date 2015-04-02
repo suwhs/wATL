@@ -25,6 +25,7 @@ public class MainActivity extends ActionBarActivity {
         ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
 
         data.add(getRowData(0));
+        data.add(getRowData(1));
 
 
         SimpleAdapter adapter = new SimpleAdapter(this,data,R.layout.samples_list_item, new String[]  {
@@ -40,6 +41,9 @@ public class MainActivity extends ActionBarActivity {
                 switch(position) {
                     case 0:
                         i.setClass(getBaseContext(), TextViewWSActivity.class);
+                        break;
+                    case 1:
+                        i.setClass(getBaseContext(), TextViewExScrollActivity.class);
                         break;
                     default:
                         return;
@@ -58,6 +62,10 @@ public class MainActivity extends ActionBarActivity {
             case 0:
                 title = "Selection TextView Sample";
                 description = "su.whs.atl.ui.TextViewWS";
+                break;
+            case 1:
+                title = "TextViewEx in ScrollView";
+                description = "justification enabled";
                 break;
 
         }
