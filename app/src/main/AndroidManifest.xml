@@ -28,6 +28,10 @@
             android:name=".TextViewExScrollActivity"
             android:label="@string/title_activity_text_view_ex_scroll" >
         </activity>
+        <activity
+            android:name=".HyphenTextViewExActivity"
+            android:label="@string/title_activity_hyphen_text_view_ex" >
+        </activity>
     </application>
 
 </manifest>

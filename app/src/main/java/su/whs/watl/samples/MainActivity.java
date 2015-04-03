@@ -26,6 +26,7 @@ public class MainActivity extends ActionBarActivity {
 
         data.add(getRowData(0));
         data.add(getRowData(1));
+        data.add(getRowData(2));
 
 
         SimpleAdapter adapter = new SimpleAdapter(this,data,R.layout.samples_list_item, new String[]  {
@@ -44,6 +45,9 @@ public class MainActivity extends ActionBarActivity {
                         break;
                     case 1:
                         i.setClass(getBaseContext(), TextViewExScrollActivity.class);
+                        break;
+                    case 2:
+                        i.setClass(getBaseContext(), HyphenTextViewExActivity.class);
                         break;
                     default:
                         return;
@@ -66,6 +70,10 @@ public class MainActivity extends ActionBarActivity {
             case 1:
                 title = "TextViewEx in ScrollView";
                 description = "justification enabled";
+                break;
+            case 2:
+                title = "Hyphenation Test";
+                description = "custom LineBreaker example";
                 break;
 
         }
