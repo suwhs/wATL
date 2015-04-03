@@ -86,7 +86,7 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
         switch(index) {
             case 0:
                 title = "Selection TextView Sample";
-                description = "su.whs.atl.ui.TextViewWS";
+                description = "su.whs.watl.ui.TextViewWS";
                 break;
             case 1:
                 title = "TextViewEx in ScrollView";
