@@ -17,7 +17,7 @@ public class HyphenTextViewExActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hyphen_text_view_ex);
         TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
-        CharSequence text = Html.fromHtml(SampleContent.LOREM, new Html.ImageGetter() {
+        CharSequence text = Html.fromHtml(SampleContent.get(), new Html.ImageGetter() {
 
             @Override
             public Drawable getDrawable(String source) {

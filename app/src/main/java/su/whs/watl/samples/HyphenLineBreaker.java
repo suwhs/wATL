@@ -85,6 +85,8 @@ public class HyphenLineBreaker extends LineBreaker {
         }
     }
 
+    // TODO: change to statically created TrieNode for each patternObject
+
     private TrieNode createTrie(Map<Integer, String> patternObject) {
 
         int i = 0, c = 0, p = 0, codePoint;
@@ -217,7 +219,7 @@ public class HyphenLineBreaker extends LineBreaker {
     }
 
     private int nearestLineBreakFromCache(int start, int end) {
-        int offset = end - start + 1;
+        int offset = end - start;
         if (lastQueryCache.hyphens == null || offset>lastQueryCache.hyphens.length) {
             return start;
         }
