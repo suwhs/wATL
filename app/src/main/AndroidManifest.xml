@@ -27,11 +27,20 @@
         </activity>
         <activity
             android:name=".TextViewExScrollActivity"
-            android:label="@string/title_activity_text_view_ex_scroll" >
+            android:label="@string/title_activity_text_view_ex_scroll"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="su.whs.watl.samples.MainActivity" />
+
         </activity>
         <activity
             android:name=".HyphenTextViewExActivity"
-            android:label="@string/title_activity_hyphen_text_view_ex" >
+            android:label="@string/title_activity_hyphen_text_view_ex"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="su.whs.watl.samples.MainActivity" />
         </activity>
     </application>
 
