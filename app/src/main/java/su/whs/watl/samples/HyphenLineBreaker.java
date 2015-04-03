@@ -262,7 +262,7 @@ public class HyphenLineBreaker extends LineBreaker {
                 hyphenate(word,lastQueryCache.hyphens);
                 return nearestLineBreakFromCache(start,end);
             }
-            return wstart;
+            return start;
         } else {
             if (letter)
                 return firstNonLetterBackward(text, start, end+1);

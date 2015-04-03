@@ -8,25 +8,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class MainActivity extends ActionBarActivity {
-
+public class MainActivity extends ActionBarActivity implements wATLApp.StateListener {
+    private static boolean hyphenatorReady = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ListView lv = (ListView) findViewById(R.id.listView);
         ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
-
+        final ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar);
         data.add(getRowData(0));
         data.add(getRowData(1));
         data.add(getRowData(2));
+
 
 
         SimpleAdapter adapter = new SimpleAdapter(this,data,R.layout.samples_list_item, new String[]  {
@@ -47,7 +50,12 @@ public class MainActivity extends ActionBarActivity {
                         i.setClass(getBaseContext(), TextViewExScrollActivity.class);
                         break;
                     case 2:
-                        i.setClass(getBaseContext(), HyphenTextViewExActivity.class);
+                        if (hyphenatorReady)
+                            i.setClass(getBaseContext(), HyphenTextViewExActivity.class);
+                        else {
+                            Toast.makeText(getBaseContext(), "please wait - hyphenator loading...", Toast.LENGTH_LONG).show();
+                            return;
+                        }
                         break;
                     default:
                         return;
@@ -55,6 +63,19 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(i);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        hyphenatorReady = false;
+        ((wATLApp)getApplication()).addStateListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ((wATLApp)getApplication()).removeStateListener(this);
     }
 
     private Map<String,Object> getRowData(int index) {
@@ -103,5 +124,20 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onHyphenatorLoaded() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar);
+                if (pb!=null) {
+                    pb.setIndeterminate(false);
+                    pb.setProgress(100);
+                    hyphenatorReady = true;
+                }
+            }
+        });
     }
 }
