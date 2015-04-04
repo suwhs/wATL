@@ -7,4 +7,6 @@
     <string name="title_activity_text_view_ws">TextViewWSActivity</string>
     <string name="title_activity_text_view_ex_scroll">TextViewExScrollActivity</string>
     <string name="title_activity_hyphen_text_view_ex">HyphenTextViewExActivity</string>
+    <string name="title_activity_another_hyphen_text_view_ex">AnotherHyphenTextViewExActivity
+    </string>
 </resources>

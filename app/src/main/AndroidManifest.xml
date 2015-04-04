@@ -3,11 +3,11 @@
     package="su.whs.watl.samples" >
 
     <application
+        android:name=".wATLApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:name=".wATLApp">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main" >
@@ -32,11 +32,18 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="su.whs.watl.samples.MainActivity" />
-
         </activity>
         <activity
             android:name=".HyphenTextViewExActivity"
             android:label="@string/title_activity_hyphen_text_view_ex"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="su.whs.watl.samples.MainActivity" />
+        </activity>
+        <activity
+            android:name=".AnotherHyphenTextViewExActivity"
+            android:label="@string/title_activity_another_hyphen_text_view_ex"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

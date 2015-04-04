@@ -29,7 +29,7 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
         data.add(getRowData(0));
         data.add(getRowData(1));
         data.add(getRowData(2));
-
+        data.add(getRowData(3));
 
 
         SimpleAdapter adapter = new SimpleAdapter(this,data,R.layout.samples_list_item, new String[]  {
@@ -52,6 +52,14 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
                     case 2:
                         if (hyphenatorReady)
                             i.setClass(getBaseContext(), HyphenTextViewExActivity.class);
+                        else {
+                            Toast.makeText(getBaseContext(), "please wait - hyphenator loading...", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        break;
+                    case 3:
+                        if (hyphenatorReady)
+                            i.setClass(getBaseContext(), AnotherHyphenTextViewExActivity.class);
                         else {
                             Toast.makeText(getBaseContext(), "please wait - hyphenator loading...", Toast.LENGTH_LONG).show();
                             return;
@@ -96,7 +104,10 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
                 title = "Hyphenation Test";
                 description = "custom LineBreaker example";
                 break;
-
+            case 3:
+                title = "Battle for Westnoth";
+                description = "Another hyphenation test";
+                break;
         }
         result.put("img",img);
         result.put("title",title);
