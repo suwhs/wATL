@@ -5,6 +5,11 @@ licensed under GPL v3
 
 *wATL* is a library for android applications with support for formatted text justification, image wrapping and more 
 
+UPDATE 04 Apr 15
+ hyphenation rules loading optimization
+ added icons and 'about' activity
+ added image wrap demo activity
+
 UPDATE 03 Apr 15
  added *Soft-Hyphenation LineBreaker*  to sample application - so, TextViewEx render justified text using HyphenLineBreaker.class
     HyphenLineBreaker takes time to initialize (it's adapted third-party code), but initialization required once per launch, and
