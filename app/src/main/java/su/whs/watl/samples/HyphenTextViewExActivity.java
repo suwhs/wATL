@@ -1,12 +1,13 @@
 package su.whs.watl.samples;
 
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import su.whs.watl.text.hyphen.HyphenPattern;
 import su.whs.watl.ui.TextViewEx;
 
 
@@ -31,7 +32,7 @@ public class HyphenTextViewExActivity extends ActionBarActivity {
         tv.setText(text);
         tv.setTextIsSelectable(true);
         tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
-        tv.getOptions().setLineBreaker(HyphenLineBreaker.getInstance(HyphenLineBreaker.HyphenPattern.EN_US));
+        tv.getOptions().setLineBreaker(HyphenLineBreaker.getInstance(HyphenPattern.EN_US));
     }
 
     @Override
