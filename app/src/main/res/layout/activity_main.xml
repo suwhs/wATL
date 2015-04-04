@@ -11,15 +11,16 @@
         android:layout_height="wrap_content"
         android:id="@+id/progressBar"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:indeterminate="true" />
+        android:indeterminate="true"
+        android:layout_alignParentBottom="true" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listView"
-        android:layout_alignParentTop="false"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/progressBar" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentEnd="false"
+        android:layout_above="@+id/progressBar" />
 
 </RelativeLayout>

@@ -95,18 +95,22 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
             case 0:
                 title = "Selection TextView Sample";
                 description = "su.whs.watl.ui.TextViewWS";
+                img = R.drawable.ic_select_text;
                 break;
             case 1:
                 title = "TextViewEx in ScrollView";
                 description = "justification enabled";
+                img = R.drawable.ic_justify;
                 break;
             case 2:
                 title = "Hyphenation Test";
                 description = "custom LineBreaker example";
+                img = R.drawable.ic_hyphen;
                 break;
             case 3:
-                title = "Battle for Westnoth";
-                description = "Another hyphenation test";
+                title = "Image Wrap Test";
+                description = "Battle for Westnoth";
+                img = R.drawable.ic_battle_for_wesnoth;
                 break;
         }
         result.put("img",img);
@@ -130,7 +134,8 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_about) {
+            startActivity(new Intent(this,AboutActivity.class));
             return true;
         }
 

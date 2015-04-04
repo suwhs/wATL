@@ -19,7 +19,12 @@ import su.whs.watl.text.HtmlTagHandler;
 import su.whs.watl.text.hyphen.HyphenPattern;
 import su.whs.watl.ui.TextViewEx;
 
-
+/**
+ * TextViewEx with HyphenLineBreaker sample
+ * also includes:
+ *  - ImageGetter sample for loading images from assets/ folder
+ *  - HtmlTagHandler() usage
+ */
 public class AnotherHyphenTextViewExActivity extends ActionBarActivity {
 
 
@@ -28,8 +33,13 @@ public class AnotherHyphenTextViewExActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hyphen_text_view_ex);
         TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
-        CharSequence text = Html.fromHtml(SampleContent.wesnoth(), new Html.ImageGetter() {
 
+        CharSequence text = Html.fromHtml(SampleContent.wesnoth(), new Html.ImageGetter() {
+            /**
+             * load images from assets/ folder
+             * @param source - usually value for 'src' attribute of <img> tag
+             * @return Drawable object
+             */
             @Override
             public Drawable getDrawable(String source) {
                 Context ctx = getApplicationContext();
@@ -48,6 +58,7 @@ public class AnotherHyphenTextViewExActivity extends ActionBarActivity {
                 return result;
             }
         }, new HtmlTagHandler());
+
         tv.setText(text);
         tv.setTextIsSelectable(true);
         tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));

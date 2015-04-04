@@ -1,12 +1,24 @@
 package su.whs.watl.samples;
 
 /**
- * Modified by igor n. boulliev on 03.04.15.
- * adaptation of DefaultHyphenator.java from https://raw.githubusercontent.com/bluejamesbond/TextJustify-Android/master/library/src/main/java/com/bluejamesbond/text/hyphen/DefaultHyphenator.java
- * removed original issue report links, please feedback to github.com/suwhs/wATL
+ * created by igor n. boulliev on 03.04.15.
  */
 
-/*
+import android.annotation.SuppressLint;
+
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import su.whs.watl.text.LineBreaker;
+import su.whs.watl.text.hyphen.HyphenPattern;
+
+
+@SuppressLint("UseSparseArrays")
+public class HyphenLineBreaker extends LineBreaker {
+
+    /*
  * Copyright 2015 Mathew Kurian
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -43,20 +55,6 @@ package su.whs.watl.samples;
  * @author Igor N. Boulliev
  * @date   2015-04-03
  */
-
-import android.annotation.SuppressLint;
-
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import su.whs.watl.text.LineBreaker;
-import su.whs.watl.text.hyphen.HyphenPattern;
-
-
-@SuppressLint("UseSparseArrays")
-public class HyphenLineBreaker extends LineBreaker {
 
     private static final HashMap<HyphenPattern, LineBreaker> cached;
 
@@ -153,6 +151,8 @@ public class HyphenLineBreaker extends LineBreaker {
             }
         }
     }
+
+    /* adaptation code by igor n. boulliev below */
 
 
     private class LastQueryCache {
