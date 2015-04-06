@@ -57,6 +57,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="su.whs.watl.samples.MainActivity" />
         </activity>
+        <activity
+            android:name=".MultiColumnTextViewExActivity"
+            android:label="@string/title_activity_multi_column_text_view_ex"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="su.whs.watl.samples.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

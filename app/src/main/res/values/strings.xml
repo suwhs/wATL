@@ -10,4 +10,5 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_about">About</string>
+    <string name="title_activity_multi_column_text_view_ex">MultiColumn Sample</string>
 </resources>

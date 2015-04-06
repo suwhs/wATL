@@ -30,7 +30,7 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
         data.add(getRowData(1));
         data.add(getRowData(2));
         data.add(getRowData(3));
-
+        data.add(getRowData(4));
 
         SimpleAdapter adapter = new SimpleAdapter(this,data,R.layout.samples_list_item, new String[]  {
             "img", "title", "description"
@@ -65,6 +65,15 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
                             return;
                         }
                         break;
+                    case 4:
+                        if (hyphenatorReady)
+                            i.setClass(getBaseContext(), MultiColumnTextViewExActivity.class);
+                        else {
+                            Toast.makeText(getBaseContext(), "please wait - hyphenator loading...", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        break;
+
                     default:
                         return;
                 }
@@ -111,6 +120,11 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
                 title = "Image Wrap Test";
                 description = "Battle for Westnoth";
                 img = R.drawable.ic_battle_for_wesnoth;
+                break;
+            case 4:
+                title = "Multi-column TextView";
+                description = "su.whs.watl.ui.MultiColumnTextViewEx";
+                img = R.mipmap.ic_columns;
                 break;
         }
         result.put("img",img);
