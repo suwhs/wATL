@@ -11,6 +11,32 @@ Demo Application available on Google Play
 <img src="https://developer.android.com/images/brand/en_generic_rgb_wo_45.png" alt="Get it on Google Play" />
 </a>
 
+Quick Start
+======
+Usage:
+
+1. add maven repository url to build.gradle (top-level)
+<pre>
+allprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven {
+            url  'https://raw.githubusercontent.com/suwhs/maven-repository/master/'
+        }
+    }
+}
+</pre>
+
+2. add dependency to module's builed.gradle
+<pre>
+dependencies {
+....
+     compile 'su.whs.watl:watllibrarylite:0.9.1'
+}
+</pre>
+
+
 News
 ======
 
