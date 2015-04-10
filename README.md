@@ -60,7 +60,7 @@ UPDATE 03 Apr 15
 Published Classes
 ========
 
-    some description on <a href="https://github.com/suwhs/wATL/wiki">Wiki</a>
+some description on <a href="https://github.com/suwhs/wATL/wiki">Wiki</a>
 
 - *su.whs.watl.ui.TextViewWS* - base class with methods for handling text selection
     <a href="https://github.com/suwhs/wATL/blob/master/screenshots/TextViewWS1.png">screenshot 1</a>
