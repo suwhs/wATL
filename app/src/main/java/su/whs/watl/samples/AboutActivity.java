@@ -20,7 +20,9 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
 import su.whs.watl.text.HtmlTagHandler;
+import su.whs.watl.text.HyphenLineBreaker;
 import su.whs.watl.text.hyphen.HyphenPattern;
+import su.whs.watl.text.hyphen.PatternsLoader;
 import su.whs.watl.ui.TextViewEx;
 
 
@@ -94,7 +96,8 @@ public class AboutActivity extends ActionBarActivity {
         tv.setTextIsSelectable(true);
         tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
         tv.getOptions().setImagePlacementHandler(null);
-        tv.getOptions().setLineBreaker(HyphenLineBreaker.getInstance(HyphenPattern.EN_US));
+        HyphenPattern pat = PatternsLoader.getInstance(this).getHyphenPatternAssets("en_us.hyphen.dat");
+        tv.getOptions().setLineBreaker(HyphenLineBreaker.getInstance(pat));
     }
 
     @Override
