@@ -35,7 +35,10 @@ public class HyphenTextViewExActivity extends ActionBarActivity {
         tv.setTextIsSelectable(true);
         tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
         HyphenPattern pat = PatternsLoader.getInstance(this).getHyphenPatternAssets("en_us.hyphen.dat");
-        tv.getOptions().setLineBreaker(HyphenLineBreaker.getInstance(pat));
+        tv.getOptions()
+                .setLineBreaker(HyphenLineBreaker.getInstance(pat))
+                .setNewLineLeftMargin(20)
+                .setNewLineTopMargin(8);
     }
 
     @Override
