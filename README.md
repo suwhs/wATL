@@ -32,7 +32,7 @@ allprojects {
 <pre>
 dependencies {
 ....
-     compile 'su.whs.watl:watllibrarylite:0.9.1'
+     compile 'su.whs.watl:watllibrarylite:+'
 }
 </pre>
 
