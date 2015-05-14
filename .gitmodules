@@ -1,0 +1,3 @@
+[submodule "watllibrarylite"]
+	path = wATLlib
+	url = git@github.com:suwhs/wATLlib.git
