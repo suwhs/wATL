@@ -31,6 +31,7 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
         data.add(getRowData(2));
         data.add(getRowData(3));
         data.add(getRowData(4));
+        data.add(getRowData(5));
 
         SimpleAdapter adapter = new SimpleAdapter(this,data,R.layout.samples_list_item, new String[]  {
             "img", "title", "description"
@@ -73,7 +74,14 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
                             return;
                         }
                         break;
-
+                    case 5:
+                        if (hyphenatorReady)
+                            i.setClass(getBaseContext(), ArticlesFlowActivity.class);
+                        else {
+                            Toast.makeText(getBaseContext(), "please wait - hyphenator loading...", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        break;
                     default:
                         return;
                 }
@@ -125,6 +133,11 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
                 title = "Multi-column TextView";
                 description = "su.whs.watl.ui.MultiColumnTextViewEx";
                 img = R.mipmap.ic_columns;
+                break;
+            case 5:
+                title = "Articles";
+                description = "Paged View Demo";
+                img = R.mipmap.ic_logo;
                 break;
         }
         result.put("img",img);

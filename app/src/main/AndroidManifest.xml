@@ -65,6 +65,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="su.whs.watl.samples.MainActivity" />
         </activity>
+        <activity
+            android:name=".ArticlesFlowActivity"
+            android:label="@string/title_activity_articles_flow"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="su.whs.watl.samples.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -1,0 +1,813 @@
+<div class="article">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="d423499e1"></a>RSS feeds with Java - Tutorial
+                  </h2>
+               </div>
+               <div>
+                  <div class="author">
+                     <h3 class="author"><span class="firstname">Lars</span> <span class="surname">Vogel</span></h3>
+                  </div>
+               </div>
+               <div>
+                  <p class="releaseinfo">
+                     
+                  </p>
+                  <p>Version 2.1</p>
+                  <p class="releaseinfo">
+                     
+                  </p>
+               </div>
+               <div>
+                  <p class="copyright">Copyright © 2008, 2009, 2010, 2011, 2012, 2013  Lars Vogel</p>
+               </div>
+               <div>
+                  <p class="pubdate">06.03.2013</p>
+               </div>
+               <div>
+                  <div class="abstract"><a name="abstract"></a><p class="title"><b>RSS Feeds with Java</b></p>
+                     <p> This tutorial explains how to read and create RSS feeds with
+                        Java. It uses the Stax XML API. Eclipse
+                        is used as the Java IDE and Java7 is used.
+                        
+                     </p>
+                  </div>
+               </div>
+            </div>
+            <div>
+               <div xmlns:fo="http://www.w3.org/1999/XSL/Format" data-type="ad" data-publisher="lqm.javaeclipseandroid.site" data-zone="ron" data-format="728x90"></div>
+            </div>
+            <hr>
+         </div>
+         <div class="toc">
+            <p><b>Table of Contents</b></p>
+            <dl>
+               <dt><span class="section"><a href="#rssoverview">1. RSS - Really Simple Syndication</a></span></dt>
+               <dt><span class="section"><a href="#rssoverview_java">2. Prerequisites</a></span></dt>
+               <dt><span class="section"><a href="#setup_model">3. Project and Domain model</a></span></dt>
+               <dt><span class="section"><a href="#read">4. Read RSS Feeds with Stax</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#read_stax">4.1. Create the XML Reader class</a></span></dt>
+                     <dt><span class="section"><a href="#read_test">4.2. Test the code</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#write">5. Write RSS Feeds with Stax</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#write_stax">5.1. Create writer</a></span></dt>
+                     <dt><span class="section"><a href="#write_test">5.2. Test the code</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#thankyou">6. Support this website</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#thankyou">6.1. Thank you</a></span></dt>
+                     <dt><span class="section"><a href="#questions">6.2. Questions and Discussion</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#resources">7. Links and Literature</a></span></dt>
+            </dl>
+         </div>	
+         <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         
+         <!-- Article - After table of content -->
+         <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-3851443674951530" data-ad-slot="6440098216"></ins>
+         <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="rssoverview"></a>1.&nbsp;RSS - Really Simple Syndication
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               An
+               <em class="wordasword">RSS</em>
+               document is an XML file which can be used to publish blog
+               entries and
+               news. The format of the XML
+               file
+               is specified via the RSS
+               specification.
+               
+            </p>
+            <p>
+               RSS stands for
+               <em class="wordasword">Really Simple Syndication</em>
+               (in version 2.0 of
+               the
+               RSS specification).
+               
+            </p>
+            <p>Typically a RSS file is provided by a web server, which RSS client
+               read.
+               These RSS clients parse the file and display it.
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="rssoverview_java"></a>2.&nbsp;Prerequisites
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p> As an RSS feed is a XML file we can use the Java XML parsers to
+               read and create
+               RSS feeds. The following will use the Java Stax XML
+               parser.
+               
+            </p>
+            <p>
+               For an introduction into XML and its usage with Java see
+               <a class="ulink" href="http://www.vogella.com/tutorials/JavaXML/article.html" target="_top"> Java XML Tutorial</a>.
+               
+            </p>
+         </div>
+         <!-- Lake Quincy Ads -->
+         <div data-type="ad" data-publisher="lqm.javaeclipseandroid.site" data-zone="ron" data-format="728x90">
+            
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="setup_model"></a>3.&nbsp;Project and Domain model
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               Create the Java project called
+               <em class="wordasword">de.vogella.rss</em>. Create the following
+               Java classes, which is used as
+               domain
+               model.
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.rss.model;
+
+<em class="hl-comment" style="color: #080">/*
+ * Represents one RSS message
+ */</em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> FeedMessage {
+
+  String title;
+  String description;
+  String link;
+  String author;
+  String guid;
+
+  <span class="hl-keyword">public</span> String getTitle() {
+    <span class="hl-keyword">return</span> title;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setTitle(String title) {
+    <span class="hl-keyword">this</span>.title = title;
+  }
+
+  <span class="hl-keyword">public</span> String getDescription() {
+    <span class="hl-keyword">return</span> description;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setDescription(String description) {
+    <span class="hl-keyword">this</span>.description = description;
+  }
+
+  <span class="hl-keyword">public</span> String getLink() {
+    <span class="hl-keyword">return</span> link;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setLink(String link) {
+    <span class="hl-keyword">this</span>.link = link;
+  }
+
+  <span class="hl-keyword">public</span> String getAuthor() {
+    <span class="hl-keyword">return</span> author;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setAuthor(String author) {
+    <span class="hl-keyword">this</span>.author = author;
+  }
+
+  <span class="hl-keyword">public</span> String getGuid() {
+    <span class="hl-keyword">return</span> guid;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setGuid(String guid) {
+    <span class="hl-keyword">this</span>.guid = guid;
+  }
+
+  <em><span class="hl-annotation" style="color: gray">@Override</span></em>
+  <span class="hl-keyword">public</span> String toString() {
+    <span class="hl-keyword">return</span> <span class="hl-string" style="color:blue">"FeedMessage [title="</span> + title + <span class="hl-string" style="color:blue">", description="</span> + description
+        + <span class="hl-string" style="color:blue">", link="</span> + link + <span class="hl-string" style="color:blue">", author="</span> + author + <span class="hl-string" style="color:blue">", guid="</span> + guid
+        + <span class="hl-string" style="color:blue">"]"</span>;
+  }
+
+} </pre><p>
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.rss.model;
+
+<span class="hl-keyword">import</span> java.util.ArrayList;
+<span class="hl-keyword">import</span> java.util.List;
+
+<em class="hl-comment" style="color: #080">/*
+ * Stores an RSS feed
+ */</em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Feed {
+
+  <span class="hl-keyword">final</span> String title;
+  <span class="hl-keyword">final</span> String link;
+  <span class="hl-keyword">final</span> String description;
+  <span class="hl-keyword">final</span> String language;
+  <span class="hl-keyword">final</span> String copyright;
+  <span class="hl-keyword">final</span> String pubDate;
+
+  <span class="hl-keyword">final</span> List&lt;FeedMessage&gt; entries = <span class="hl-keyword">new</span> ArrayList&lt;FeedMessage&gt;();
+
+  <span class="hl-keyword">public</span> Feed(String title, String link, String description, String language,
+      String copyright, String pubDate) {
+    <span class="hl-keyword">this</span>.title = title;
+    <span class="hl-keyword">this</span>.link = link;
+    <span class="hl-keyword">this</span>.description = description;
+    <span class="hl-keyword">this</span>.language = language;
+    <span class="hl-keyword">this</span>.copyright = copyright;
+    <span class="hl-keyword">this</span>.pubDate = pubDate;
+  }
+
+  <span class="hl-keyword">public</span> List&lt;FeedMessage&gt; getMessages() {
+    <span class="hl-keyword">return</span> entries;
+  }
+
+  <span class="hl-keyword">public</span> String getTitle() {
+    <span class="hl-keyword">return</span> title;
+  }
+
+  <span class="hl-keyword">public</span> String getLink() {
+    <span class="hl-keyword">return</span> link;
+  }
+
+  <span class="hl-keyword">public</span> String getDescription() {
+    <span class="hl-keyword">return</span> description;
+  }
+
+  <span class="hl-keyword">public</span> String getLanguage() {
+    <span class="hl-keyword">return</span> language;
+  }
+
+  <span class="hl-keyword">public</span> String getCopyright() {
+    <span class="hl-keyword">return</span> copyright;
+  }
+
+  <span class="hl-keyword">public</span> String getPubDate() {
+    <span class="hl-keyword">return</span> pubDate;
+  }
+
+  <em><span class="hl-annotation" style="color: gray">@Override</span></em>
+  <span class="hl-keyword">public</span> String toString() {
+    <span class="hl-keyword">return</span> <span class="hl-string" style="color:blue">"Feed [copyright="</span> + copyright + <span class="hl-string" style="color:blue">", description="</span> + description
+        + <span class="hl-string" style="color:blue">", language="</span> + language + <span class="hl-string" style="color:blue">", link="</span> + link + <span class="hl-string" style="color:blue">", pubDate="</span>
+        + pubDate + <span class="hl-string" style="color:blue">", title="</span> + title + <span class="hl-string" style="color:blue">"]"</span>;
+  }
+
+} </pre><p>
+               
+            </p>
+         </div> 
+         
+         <!-- Chitika 550x250 MEGA Unit CODE for Vogella--> 
+         <script type="text/javascript">(function(){if(window.CHITIKA===undefined){window.CHITIKA={'units':[]};};var unit={"calltype":"async[2]","publisher":"vogella","width":550,"height":250,"sid":"Chitika Default"};var placement_id=window.CHITIKA.units.length;window.CHITIKA.units.push(unit);document.write('<div id="chitikaAdBlock-'+placement_id+'"></div>');}());</script><div id="chitikaAdBlock-1"></div>
+         
+         <script type="text/javascript" src="//cdn.chitika.net/getads.js" async="async"></script>
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="read"></a>4.&nbsp;Read RSS Feeds with Stax
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="read_stax"></a>4.1.&nbsp;Create the XML Reader class
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>Create the following
+                  class to read the XML file.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.rss.read;
+
+<span class="hl-keyword">import</span> java.io.IOException;
+<span class="hl-keyword">import</span> java.io.InputStream;
+<span class="hl-keyword">import</span> java.net.MalformedURLException;
+<span class="hl-keyword">import</span> java.net.URL;
+
+<span class="hl-keyword">import</span> javax.xml.stream.XMLEventReader;
+<span class="hl-keyword">import</span> javax.xml.stream.XMLInputFactory;
+<span class="hl-keyword">import</span> javax.xml.stream.XMLStreamException;
+<span class="hl-keyword">import</span> javax.xml.stream.events.Characters;
+<span class="hl-keyword">import</span> javax.xml.stream.events.XMLEvent;
+
+<span class="hl-keyword">import</span> de.vogella.rss.model.Feed;
+<span class="hl-keyword">import</span> de.vogella.rss.model.FeedMessage;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> RSSFeedParser {
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String TITLE = <span class="hl-string" style="color:blue">"title"</span>;
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String DESCRIPTION = <span class="hl-string" style="color:blue">"description"</span>;
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String CHANNEL = <span class="hl-string" style="color:blue">"channel"</span>;
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String LANGUAGE = <span class="hl-string" style="color:blue">"language"</span>;
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String COPYRIGHT = <span class="hl-string" style="color:blue">"copyright"</span>;
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String LINK = <span class="hl-string" style="color:blue">"link"</span>;
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String AUTHOR = <span class="hl-string" style="color:blue">"author"</span>;
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String ITEM = <span class="hl-string" style="color:blue">"item"</span>;
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String PUB_DATE = <span class="hl-string" style="color:blue">"pubDate"</span>;
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String GUID = <span class="hl-string" style="color:blue">"guid"</span>;
+
+  <span class="hl-keyword">final</span> URL url;
+
+  <span class="hl-keyword">public</span> RSSFeedParser(String feedUrl) {
+    <span class="hl-keyword">try</span> {
+      <span class="hl-keyword">this</span>.url = <span class="hl-keyword">new</span> URL(feedUrl);
+    } <span class="hl-keyword">catch</span> (MalformedURLException e) {
+      <span class="hl-keyword">throw</span> <span class="hl-keyword">new</span> RuntimeException(e);
+    }
+  }
+
+  <span class="hl-keyword">public</span> Feed readFeed() {
+    Feed feed = null;
+    <span class="hl-keyword">try</span> {
+      <span class="hl-keyword">boolean</span> isFeedHeader = true;
+      <em class="hl-comment" style="color: #080">// Set header values intial to the empty string</em>
+      String description = <span class="hl-string" style="color:blue">""</span>;
+      String title = <span class="hl-string" style="color:blue">""</span>;
+      String link = <span class="hl-string" style="color:blue">""</span>;
+      String language = <span class="hl-string" style="color:blue">""</span>;
+      String copyright = <span class="hl-string" style="color:blue">""</span>;
+      String author = <span class="hl-string" style="color:blue">""</span>;
+      String pubdate = <span class="hl-string" style="color:blue">""</span>;
+      String guid = <span class="hl-string" style="color:blue">""</span>;
+
+      <em class="hl-comment" style="color: #080">// First create a new XMLInputFactory</em>
+      XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+      <em class="hl-comment" style="color: #080">// Setup a new eventReader</em>
+      InputStream in = read();
+      XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
+      <em class="hl-comment" style="color: #080">// read the XML document</em>
+      <span class="hl-keyword">while</span> (eventReader.hasNext()) {
+        XMLEvent event = eventReader.nextEvent();
+        <span class="hl-keyword">if</span> (event.isStartElement()) {
+          String localPart = event.asStartElement().getName()
+              .getLocalPart();
+          <span class="hl-keyword">switch</span> (localPart) {
+          <span class="hl-keyword">case</span> ITEM:
+            <span class="hl-keyword">if</span> (isFeedHeader) {
+              isFeedHeader = false;
+              feed = <span class="hl-keyword">new</span> Feed(title, link, description, language,
+                  copyright, pubdate);
+            }
+            event = eventReader.nextEvent();
+            <span class="hl-keyword">break</span>;
+          <span class="hl-keyword">case</span> TITLE:
+            title = getCharacterData(event, eventReader);
+            <span class="hl-keyword">break</span>;
+          <span class="hl-keyword">case</span> DESCRIPTION:
+            description = getCharacterData(event, eventReader);
+            <span class="hl-keyword">break</span>;
+          <span class="hl-keyword">case</span> LINK:
+            link = getCharacterData(event, eventReader);
+            <span class="hl-keyword">break</span>;
+          <span class="hl-keyword">case</span> GUID:
+            guid = getCharacterData(event, eventReader);
+            <span class="hl-keyword">break</span>;
+          <span class="hl-keyword">case</span> LANGUAGE:
+            language = getCharacterData(event, eventReader);
+            <span class="hl-keyword">break</span>;
+          <span class="hl-keyword">case</span> AUTHOR:
+            author = getCharacterData(event, eventReader);
+            <span class="hl-keyword">break</span>;
+          <span class="hl-keyword">case</span> PUB_DATE:
+            pubdate = getCharacterData(event, eventReader);
+            <span class="hl-keyword">break</span>;
+          <span class="hl-keyword">case</span> COPYRIGHT:
+            copyright = getCharacterData(event, eventReader);
+            <span class="hl-keyword">break</span>;
+          }
+        } <span class="hl-keyword">else</span> <span class="hl-keyword">if</span> (event.isEndElement()) {
+          <span class="hl-keyword">if</span> (event.asEndElement().getName().getLocalPart() == (ITEM)) {
+            FeedMessage message = <span class="hl-keyword">new</span> FeedMessage();
+            message.setAuthor(author);
+            message.setDescription(description);
+            message.setGuid(guid);
+            message.setLink(link);
+            message.setTitle(title);
+            feed.getMessages().add(message);
+            event = eventReader.nextEvent();
+            <span class="hl-keyword">continue</span>;
+          }
+        }
+      }
+    } <span class="hl-keyword">catch</span> (XMLStreamException e) {
+      <span class="hl-keyword">throw</span> <span class="hl-keyword">new</span> RuntimeException(e);
+    }
+    <span class="hl-keyword">return</span> feed;
+  }
+
+  <span class="hl-keyword">private</span> String getCharacterData(XMLEvent event, XMLEventReader eventReader)
+      <span class="hl-keyword">throws</span> XMLStreamException {
+    String result = <span class="hl-string" style="color:blue">""</span>;
+    event = eventReader.nextEvent();
+    <span class="hl-keyword">if</span> (event <span class="hl-keyword">instanceof</span> Characters) {
+      result = event.asCharacters().getData();
+    }
+    <span class="hl-keyword">return</span> result;
+  }
+
+  <span class="hl-keyword">private</span> InputStream read() {
+    <span class="hl-keyword">try</span> {
+      <span class="hl-keyword">return</span> url.openStream();
+    } <span class="hl-keyword">catch</span> (IOException e) {
+      <span class="hl-keyword">throw</span> <span class="hl-keyword">new</span> RuntimeException(e);
+    }
+  }
+} </pre><p>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="read_test"></a>4.2.&nbsp;Test the code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  The following uses a main method to test. You could also use
+                  <a class="ulink" href="http://www.vogella.com/tutorials/JUnit/article.html" target="_top"> JUnit</a>.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.rss.tests;
+
+<span class="hl-keyword">import</span> de.vogella.rss.model.Feed;
+<span class="hl-keyword">import</span> de.vogella.rss.model.FeedMessage;
+<span class="hl-keyword">import</span> de.vogella.rss.read.RSSFeedParser;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> ReadTest {
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+    RSSFeedParser parser = <span class="hl-keyword">new</span> RSSFeedParser(<span class="hl-string" style="color:blue">"http://www.vogella.com/article.rss"</span>);
+    Feed feed = parser.readFeed();
+    System.out.println(feed);
+    <span class="hl-keyword">for</span> (FeedMessage message : feed.getMessages()) {
+      System.out.println(message);
+
+    }
+
+  }
+} </pre><p>
+                  
+               </p>
+            </div>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="write"></a>5.&nbsp;Write RSS Feeds with Stax
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="write_stax"></a>5.1.&nbsp;Create writer
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>Create the following class to write the XML file.</p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.rss.write;
+
+<span class="hl-keyword">import</span> java.io.FileOutputStream;
+
+<span class="hl-keyword">import</span> javax.xml.stream.XMLEventFactory;
+<span class="hl-keyword">import</span> javax.xml.stream.XMLEventWriter;
+<span class="hl-keyword">import</span> javax.xml.stream.XMLOutputFactory;
+<span class="hl-keyword">import</span> javax.xml.stream.XMLStreamException;
+<span class="hl-keyword">import</span> javax.xml.stream.events.Characters;
+<span class="hl-keyword">import</span> javax.xml.stream.events.EndElement;
+<span class="hl-keyword">import</span> javax.xml.stream.events.StartDocument;
+<span class="hl-keyword">import</span> javax.xml.stream.events.StartElement;
+<span class="hl-keyword">import</span> javax.xml.stream.events.XMLEvent;
+
+<span class="hl-keyword">import</span> de.vogella.rss.model.Feed;
+<span class="hl-keyword">import</span> de.vogella.rss.model.FeedMessage;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> RSSFeedWriter {
+
+  <span class="hl-keyword">private</span> String outputFile;
+  <span class="hl-keyword">private</span> Feed rssfeed;
+
+  <span class="hl-keyword">public</span> RSSFeedWriter(Feed rssfeed, String outputFile) {
+    <span class="hl-keyword">this</span>.rssfeed = rssfeed;
+    <span class="hl-keyword">this</span>.outputFile = outputFile;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> write() <span class="hl-keyword">throws</span> Exception {
+
+    <em class="hl-comment" style="color: #080">// create a XMLOutputFactory</em>
+    XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
+
+    <em class="hl-comment" style="color: #080">// create XMLEventWriter</em>
+    XMLEventWriter eventWriter = outputFactory
+        .createXMLEventWriter(<span class="hl-keyword">new</span> FileOutputStream(outputFile));
+
+    <em class="hl-comment" style="color: #080">// create a EventFactory</em>
+
+    XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+    XMLEvent end = eventFactory.createDTD(<span class="hl-string" style="color:blue">"\n"</span>);
+
+    <em class="hl-comment" style="color: #080">// create and write Start Tag</em>
+
+    StartDocument startDocument = eventFactory.createStartDocument();
+
+    eventWriter.add(startDocument);
+
+    <em class="hl-comment" style="color: #080">// create open tag</em>
+    eventWriter.add(end);
+
+    StartElement rssStart = eventFactory.createStartElement(<span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">"rss"</span>);
+    eventWriter.add(rssStart);
+    eventWriter.add(eventFactory.createAttribute(<span class="hl-string" style="color:blue">"version"</span>, <span class="hl-string" style="color:blue">"2.0"</span>));
+    eventWriter.add(end);
+
+    eventWriter.add(eventFactory.createStartElement(<span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">"channel"</span>));
+    eventWriter.add(end);
+
+    <em class="hl-comment" style="color: #080">// Write the different nodes</em>
+
+    createNode(eventWriter, <span class="hl-string" style="color:blue">"title"</span>, rssfeed.getTitle());
+
+    createNode(eventWriter, <span class="hl-string" style="color:blue">"link"</span>, rssfeed.getLink());
+
+    createNode(eventWriter, <span class="hl-string" style="color:blue">"description"</span>, rssfeed.getDescription());
+
+    createNode(eventWriter, <span class="hl-string" style="color:blue">"language"</span>, rssfeed.getLanguage());
+
+    createNode(eventWriter, <span class="hl-string" style="color:blue">"copyright"</span>, rssfeed.getCopyright());
+
+    createNode(eventWriter, <span class="hl-string" style="color:blue">"pubdate"</span>, rssfeed.getPubDate());
+
+    <span class="hl-keyword">for</span> (FeedMessage entry : rssfeed.getMessages()) {
+      eventWriter.add(eventFactory.createStartElement(<span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">"item"</span>));
+      eventWriter.add(end);
+      createNode(eventWriter, <span class="hl-string" style="color:blue">"title"</span>, entry.getTitle());
+      createNode(eventWriter, <span class="hl-string" style="color:blue">"description"</span>, entry.getDescription());
+      createNode(eventWriter, <span class="hl-string" style="color:blue">"link"</span>, entry.getLink());
+      createNode(eventWriter, <span class="hl-string" style="color:blue">"author"</span>, entry.getAuthor());
+      createNode(eventWriter, <span class="hl-string" style="color:blue">"guid"</span>, entry.getGuid());
+      eventWriter.add(end);
+      eventWriter.add(eventFactory.createEndElement(<span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">"item"</span>));
+      eventWriter.add(end);
+
+    }
+
+    eventWriter.add(end);
+    eventWriter.add(eventFactory.createEndElement(<span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">"channel"</span>));
+    eventWriter.add(end);
+    eventWriter.add(eventFactory.createEndElement(<span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">"rss"</span>));
+
+    eventWriter.add(end);
+
+    eventWriter.add(eventFactory.createEndDocument());
+
+    eventWriter.close();
+  }
+
+  <span class="hl-keyword">private</span> <span class="hl-keyword">void</span> createNode(XMLEventWriter eventWriter, String name,
+
+  String value) <span class="hl-keyword">throws</span> XMLStreamException {
+    XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+    XMLEvent end = eventFactory.createDTD(<span class="hl-string" style="color:blue">"\n"</span>);
+    XMLEvent tab = eventFactory.createDTD(<span class="hl-string" style="color:blue">"\t"</span>);
+    <em class="hl-comment" style="color: #080">// create Start node</em>
+    StartElement sElement = eventFactory.createStartElement(<span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">""</span>, name);
+    eventWriter.add(tab);
+    eventWriter.add(sElement);
+    <em class="hl-comment" style="color: #080">// create Content</em>
+    Characters characters = eventFactory.createCharacters(value);
+    eventWriter.add(characters);
+    <em class="hl-comment" style="color: #080">// create End node</em>
+    EndElement eElement = eventFactory.createEndElement(<span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">""</span>, name);
+    eventWriter.add(eElement);
+    eventWriter.add(end);
+  }
+} </pre><p>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="write_test"></a>5.2.&nbsp;Test the code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  The following uses a main method to test.
+                  
+               </p>
+               <p>
+                  Run the program to write the
+                  <code class="filename">articles.rss</code>
+                  file.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.rss.tests;
+
+<span class="hl-keyword">import</span> java.text.SimpleDateFormat;
+<span class="hl-keyword">import</span> java.util.Calendar;
+<span class="hl-keyword">import</span> java.util.Date;
+<span class="hl-keyword">import</span> java.util.GregorianCalendar;
+<span class="hl-keyword">import</span> java.util.Locale;
+
+<span class="hl-keyword">import</span> de.vogella.rss.model.Feed;
+<span class="hl-keyword">import</span> de.vogella.rss.model.FeedMessage;
+<span class="hl-keyword">import</span> de.vogella.rss.write.RSSFeedWriter;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> WriteTest {
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+    <em class="hl-comment" style="color: #080">// create the rss feed</em>
+    String copyright = <span class="hl-string" style="color:blue">"Copyright hold by Lars Vogel"</span>;
+    String title = <span class="hl-string" style="color:blue">"Eclipse and Java Information"</span>;
+    String description = <span class="hl-string" style="color:blue">"Eclipse and Java Information"</span>;
+    String language = <span class="hl-string" style="color:blue">"en"</span>;
+    String link = <span class="hl-string" style="color:blue">"http://www.vogella.com"</span>;
+    Calendar cal = <span class="hl-keyword">new</span> GregorianCalendar();
+    Date creationDate = cal.getTime();
+    SimpleDateFormat date_format = <span class="hl-keyword">new</span> SimpleDateFormat(<span class="hl-string" style="color:blue">"EEE', 'dd' 'MMM' 'yyyy' 'HH:mm:ss' 'Z"</span>, Locale.US);
+    String pubdate = date_format.format(creationDate);
+    Feed rssFeeder = <span class="hl-keyword">new</span> Feed(title, link, description, language,
+        copyright, pubdate);
+
+    <em class="hl-comment" style="color: #080">// now add one example entry</em>
+    FeedMessage feed = <span class="hl-keyword">new</span> FeedMessage();
+    feed.setTitle(<span class="hl-string" style="color:blue">"RSSFeed"</span>);
+    feed.setDescription(<span class="hl-string" style="color:blue">"This is a description"</span>);
+    feed.setAuthor(<span class="hl-string" style="color:blue">"nonsense@somewhere.de (Lars Vogel)"</span>);
+    feed.setGuid(<span class="hl-string" style="color:blue">"http://www.vogella.com/tutorials/RSSFeed/article.html"</span>);
+    feed.setLink(<span class="hl-string" style="color:blue">"http://www.vogella.com/tutorials/RSSFeed/article.html"</span>);
+    rssFeeder.getMessages().add(feed);
+
+    <em class="hl-comment" style="color: #080">// now write the file</em>
+    RSSFeedWriter writer = <span class="hl-keyword">new</span> RSSFeedWriter(rssFeeder, <span class="hl-string" style="color:blue">"articles.rss"</span>);
+    <span class="hl-keyword">try</span> {
+      writer.write();
+    } <span class="hl-keyword">catch</span> (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+} </pre><p>
+                  
+               </p>
+            </div>
+         </div> 
+         
+         <!-- Chitika 728x90 LEADERBOARD CODE -->
+         <script type="text/javascript">(function(){if(window.CHITIKA===undefined){window.CHITIKA={'units':[]};};var unit={"calltype":"async[2]","publisher":"vogella","width":728,"height":90,"sid":"Chitika Default"};var placement_id=window.CHITIKA.units.length;window.CHITIKA.units.push(unit);document.write('<div id="chitikaAdBlock-'+placement_id+'"></div>');}());</script><div id="chitikaAdBlock-2"></div>
+         <script type="text/javascript" src="//cdn.chitika.net/getads.js" async="async"></script>
+         
+         
+         <!-- Chitika 300x250 Mobile Hook -->
+         <script type="text/javascript">cmClient='vogella';cmChannel='Mobile Hook';cmWidth=300;cmHeight=250;</script>
+         <script type="text/javascript" src="http://tags.chitika.net/oneliners/hook/beta.js"></script>
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="thankyou"></a>6.&nbsp;Support this website
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               This tutorial is Open Content under the
+               <a class="ulink" href="http://creativecommons.org/licenses/by-nc-sa/3.0/de/deed.en" target="_top">
+                  CC BY-NC-SA 3.0 DE</a>
+               license. Source code in this tutorial is distributed under the
+               <a class="ulink" href="https://www.eclipse.org/legal/epl-v10.html" target="_top">Eclipse Public License</a>.
+               See the
+               <a class="ulink" href="http://www.vogella.com/license.html" target="_top">vogella License</a> page
+               for details on the terms of reuse.
+               
+            </p>
+            <p>
+               Writing and updating these tutorials is a lot of work.
+               If this free community service was helpful,
+               you can support the cause by giving a tip
+               as well as reporting typos and factual errors.
+               
+            </p>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="thankyou"></a>6.1.&nbsp;Thank you
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  
+                  	
+               </p>
+               <p></p>
+               <p>
+                  	Please consider a 
+                  <a class="no_underline" href="http://www.vogella.com/support.html" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Buttom tutorial in thank you']);">contribution</a>
+                  	if this article helped you. 
+                  	It will help to maintain our content and our Open Source activities.
+                  
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="questions"></a>6.2.&nbsp;Questions and Discussion
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  If you find errors in this tutorial, please notify me
+                  (see the
+                  <a class="ulink" href="#top" target="_top">top of the page</a>).
+                  Please note that due to the high volume of feedback I
+                  receive, I
+                  cannot answer questions to your implementation. Ensure you
+                  have read
+                  the
+                  <a class="ulink" href="http://www.vogella.com/faq.html" target="_top">vogella FAQ</a>
+                  as
+                  I don't respond to questions already answered there.
+                  
+               </p>
+            </div>
+         </div>
+         <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         
+         <!-- Article - After support -->
+         <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-3851443674951530" data-ad-slot="8639282357"></ins>
+         <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="resources"></a>7.&nbsp;Links and Literature
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               <a class="ulink" href="http://feedvalidator.org/" target="_top">
+                  http://feedvalidator.org/</a>
+               Webpage which validates feeds
+               
+            </p>
+         </div><img src="http://vg08.met.vgwort.de/na/9ea880713522470b93994cf908010264" width="1" height="1" alt="" pagespeed_url_hash="2191135565" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></div>
