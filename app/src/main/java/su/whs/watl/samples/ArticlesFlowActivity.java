@@ -157,7 +157,6 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
                 mPager.setOnPageChangeListener(ArticlesFlowActivity.this);
             }
 
-
             private String readArticle(String name) {
                 try {
                     return FileUtils.convertStreamToString(getBaseContext().getAssets().open("articles/"+name));

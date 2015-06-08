@@ -5,5 +5,6 @@
     <su.whs.watl.ui.MultiColumnTextViewEx
         android:id="@android:id/content"
         android:layout_height="match_parent"
-        android:layout_width="match_parent"/>
+        android:layout_width="match_parent"
+        android:background="@android:color/holo_blue_bright"/>
 </FrameLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ws_help_1">
+        sample TextViewWS - derived from android.viewTextView
+    </string>
+    <string name="ex_help_1">
+        sample TextViewEx - full text justify
+    </string>
+    <string name="hypen_help_1">
+        sample TextViewEx - full text justify and hyphenation example
+    </string>
+    <string name="columns_help_1">
+        sample MultiColumnTextViewEx
+    </string>
+</resources>
