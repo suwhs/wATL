@@ -101,6 +101,7 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
     /*
     * load articles in backround
     *
+    *
     */
     private void loadArticles() {
         new AsyncTask<Void,Void,Void>() {
