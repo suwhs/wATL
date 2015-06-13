@@ -16,6 +16,7 @@ import su.whs.watl.text.hyphen.PatternsLoader;
  */
 public class wATLApp extends Application {
     private boolean hyphenatorReady = false;
+    private ContentLoader contentLoader = new ContentLoader();
 
     public interface StateListener {
         void onHyphenatorLoaded();
@@ -51,6 +52,7 @@ public class wATLApp extends Application {
                 notifyListeners();
             }
         }.execute();
+
     }
 
     List<StateListener> mStateListeners = new ArrayList<StateListener>();
@@ -77,5 +79,26 @@ public class wATLApp extends Application {
                 for(StateListener listener : mStateListeners)
                     listener.onHyphenatorLoaded();
             }
+    }
+
+    public void getArticle(final String uuid, final ArticleView view) {
+        new AsyncTask<Void,Void,ContentLoader.Article>() {
+
+            @Override
+            protected ContentLoader.Article doInBackground(Void... params) {
+                ContentLoader.Article article = contentLoader.get(uuid);
+
+                return article;
+            }
+
+            @Override
+            protected void onPostExecute(ContentLoader.Article article) {
+                try {
+                    article.load(getApplicationContext(),view);
+                } catch (Exception e) {
+                    view.setContent(null,null,null,"error reading article: " + e.toString());
+                }
+            }
+        }.execute();
     }
 }

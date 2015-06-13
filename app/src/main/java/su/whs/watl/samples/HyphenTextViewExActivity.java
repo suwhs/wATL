@@ -7,6 +7,7 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import su.whs.watl.text.ContentView;
 import su.whs.watl.text.HyphenLineBreaker;
 import su.whs.watl.text.hyphen.HyphenPattern;
 import su.whs.watl.text.hyphen.PatternsLoader;
@@ -35,10 +36,12 @@ public class HyphenTextViewExActivity extends ActionBarActivity {
         tv.setTextIsSelectable(true);
         tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
         HyphenPattern pat = PatternsLoader.getInstance(this).getHyphenPatternAssets("en_us.hyphen.dat");
-        tv.getOptions()
-                .setLineBreaker(HyphenLineBreaker.getInstance(pat))
-                .setNewLineLeftMargin(20)
-                .setNewLineTopMargin(8);
+        ContentView.Options opt = tv.getOptions();
+        // tv.getOptions()
+               opt.setLineBreaker(HyphenLineBreaker.getInstance(pat));
+                // .setNewLineLeftMargin(20)
+                // .setNewLineTopMargin(8);
+
     }
 
     @Override

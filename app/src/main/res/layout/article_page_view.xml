@@ -3,7 +3,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
     <!-- simple layout contains multicolumn textview -->
     <su.whs.watl.ui.MultiColumnTextViewEx
-        android:id="@android:id/content"
+        android:id="@+id/contentTextView"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:textIsSelectable="true"/>

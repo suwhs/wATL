@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.text.Html;
 
 import java.io.IOException;
@@ -18,7 +17,6 @@ import java.util.Map;
 
 import su.whs.utils.FileUtils;
 import su.whs.watl.text.HtmlTagHandler;
-import su.whs.watl.ui.ITextView;
 
 /**
  * Created by igor n. boulliev on 07.06.15.
@@ -45,6 +43,10 @@ public class ContentLoader {
     public class Article {
         private boolean mAssets = false;
         private String mUuid;
+        private String mTitle;
+        private String mAuthor;
+        private String mSource;
+
         public Article(String uuid) {
             mUuid = uuid;
             if (mArticles.containsKey(uuid))
@@ -77,7 +79,7 @@ public class ContentLoader {
             }
         }
 
-        public void load(final Context context, final ITextView view) throws Exception {
+        public void load(final Context context, ArticleView view) throws Exception {
             final String content;
             final Html.ImageGetter imageGetter;
 
@@ -109,7 +111,7 @@ public class ContentLoader {
             } else {
 
                 if (mUuid==null) {
-                    view.setText("invalid article uuid");
+                    view.setContent(null, null, null, "invalid article uuid");
                     return;
                 }
                 if (mUuid.equals("lorem")) {
@@ -161,20 +163,9 @@ public class ContentLoader {
 
             }
 
-            new AsyncTask<Void,Void,CharSequence>() {
+            CharSequence text = Html.fromHtml(content,imageGetter,new HtmlTagHandler());
 
-                @Override
-                protected CharSequence doInBackground(Void... params) {
-                    CharSequence text = Html.fromHtml(content,imageGetter,new HtmlTagHandler());
-                    return text;
-                }
-
-                @Override
-                protected void onPostExecute(CharSequence result) {
-                    view.setText(result);
-                }
-
-            }.execute();
+            view.setContent(mTitle,mAuthor,mSource,text);
         }
 
     }

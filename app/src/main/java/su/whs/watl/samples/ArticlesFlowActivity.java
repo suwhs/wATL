@@ -2,6 +2,7 @@ package su.whs.watl.samples;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -28,7 +29,7 @@ import java.util.Map;
 import su.whs.utils.FileUtils;
 import su.whs.watl.text.BaseTextPagerAdapter;
 import su.whs.watl.text.HtmlTagHandler;
-
+import su.whs.watl.ui.MultiColumnTextViewEx;
 
 public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener {
 
@@ -42,12 +43,20 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
     }
     private class ArticlesPagesAdapter extends BaseTextPagerAdapter {
 
+        public ArticlesPagesAdapter() {
+            super(R.id.contentTextView);
+        }
+
         @Override
         public View getViewForPage(int position) {
             /* just inflate layout contains textviewex-derived view with id=@android:id/content */
-            return LayoutInflater
+            View layout = LayoutInflater
                     .from(ArticlesFlowActivity.this)
                     .inflate(R.layout.article_page_view, null, false);
+            MultiColumnTextViewEx tve = (MultiColumnTextViewEx) layout.findViewById(R.id.contentTextView);
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+                tve.setColumnsCount(2);
+            return layout;
         }
     }
 
