@@ -1,10 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
     <!-- simple layout contains multicolumn textview -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:id="@+id/counterFrame"
+        android:alpha="0.7"
+        android:background="@android:color/background_light"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="0"
+                android:id="@+id/pageNo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="of"
+                android:id="@+id/textView2"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="8dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="0"
+                android:id="@+id/pagesTotal"/>
+        </LinearLayout>
+    </FrameLayout>
     <su.whs.watl.ui.MultiColumnTextViewEx
         android:id="@+id/contentTextView"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:textIsSelectable="true"/>
-</FrameLayout>
+        android:textIsSelectable="true"
+        android:layout_alignParentTop="true"
+        android:paddingBottom="1dp"
+        android:layout_above="@+id/counterFrame" />
+</RelativeLayout>

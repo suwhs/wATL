@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
+import android.text.style.ClickableSpan;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -142,7 +143,7 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
 
                             InputStream is = null;
                             try {
-                                is = assetManager.open("articles/"+source);
+                                is = assetManager.open("articles/" + source);
                             } catch (IOException e) {
                                 return null;
                             }
@@ -153,6 +154,7 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
                             return result;
                         }
                     }, new HtmlTagHandler());
+                    ClickableSpan[] clickableSpans = mText.getSpans(0, mText.length(), ClickableSpan.class);
                     mArticles.put(mText.length(),fileName);
                     mText.append(content);
                 }
