@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +32,7 @@ import java.util.Map;
 import su.whs.utils.FileUtils;
 import su.whs.watl.text.BaseTextPagerAdapter;
 import su.whs.watl.text.HtmlTagHandler;
+import su.whs.watl.text.ITextPagesNumber;
 import su.whs.watl.text.ImagePlacementHandler;
 import su.whs.watl.ui.MultiColumnTextViewEx;
 
@@ -43,10 +46,40 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
         mTitles.put("science1a.html","How to rewire the eye");
         mTitles.put("science2a.html","These birds provide their own drum beat");
     }
+    private class IndicatorHolder {
+        TextView number;
+        TextView total;
+        TextView title;
+        int _n = -1;
+        int _t = -1;
+        public IndicatorHolder(View page) {
+            number = (TextView) page.findViewById(R.id.pageNo);
+            total = (TextView) page.findViewById(R.id.pagesTotal);
+            page.setTag(this);
+        }
+        public void set(int n, int t) {
+            if (_n==n && _t==t) return;
+            number.setText(String.format("%d",n+1));
+            total.setText(String.format("%d",t));
+            _n = n;
+            _t = t;
+        }
+    }
+
+    private ITextPagesNumber mPagesIndicator = new ITextPagesNumber() {
+        @Override
+        public void updateInfo(View page, int number, int total) {
+            IndicatorHolder ih = (IndicatorHolder) page.getTag();
+            if (ih == null)
+                ih = new IndicatorHolder(page);
+            ih.set(number,total);
+        }
+    };
+
     private class ArticlesPagesAdapter extends BaseTextPagerAdapter {
 
         public ArticlesPagesAdapter() {
-            super(R.id.contentTextView);
+            super(R.id.contentTextView, mPagesIndicator);
         }
 
         @Override
@@ -69,6 +102,11 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_articles_flow);
         mPager = (ViewPager) findViewById(R.id.viewPager);
+        mPager.setPageMargin(2);
+        mPager.setPageMarginDrawable(android.R.color.background_dark);
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB)
+            mPager.setPageTransformer(false, new ReaderViewPagerTransformer(ReaderViewPagerTransformer.TransformType.SLIDE_OVER));
+
         loadArticles();
     }
 
