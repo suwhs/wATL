@@ -29,6 +29,7 @@ import java.util.Map;
 import su.whs.utils.FileUtils;
 import su.whs.watl.text.BaseTextPagerAdapter;
 import su.whs.watl.text.HtmlTagHandler;
+import su.whs.watl.text.ImagePlacementHandler;
 import su.whs.watl.ui.MultiColumnTextViewEx;
 
 public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener {
@@ -162,7 +163,9 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
             @Override
             protected void onPostExecute(Void result) {
                 ArticlesFlowActivity.this.mArticles = mArticles;
+                mAdapter.getOptions().setImagePlacementHandler(new ImagePlacementHandler.DefaultImagePlacementHandler());
                 mAdapter.setText(mText);
+
                 mPager.setAdapter(mAdapter);
                 mPager.setOnPageChangeListener(ArticlesFlowActivity.this);
             }
