@@ -14,7 +14,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
-import android.text.style.ClickableSpan;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,8 +31,10 @@ import java.util.Map;
 import su.whs.utils.FileUtils;
 import su.whs.watl.text.BaseTextPagerAdapter;
 import su.whs.watl.text.HtmlTagHandler;
+import su.whs.watl.text.HyphenLineBreaker;
 import su.whs.watl.text.ITextPagesNumber;
-import su.whs.watl.text.ImagePlacementHandler;
+import su.whs.watl.text.hyphen.HyphenPattern;
+import su.whs.watl.text.hyphen.PatternsLoader;
 import su.whs.watl.ui.MultiColumnTextViewEx;
 
 public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener {
@@ -96,7 +97,7 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
     }
 
     private ArticlesPagesAdapter mAdapter = new ArticlesPagesAdapter();
-
+    private TextOptionsHandler mOptionsHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,14 +107,14 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
         mPager.setPageMarginDrawable(android.R.color.background_dark);
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB)
             mPager.setPageTransformer(false, new ReaderViewPagerTransformer(ReaderViewPagerTransformer.TransformType.SLIDE_OVER));
-
+        mOptionsHandler = new TextOptionsHandler(mAdapter.getOptions());
         loadArticles();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_articles_flow, menu);
+        getMenuInflater().inflate(R.menu.text_options, menu);
         return true;
     }
 
@@ -124,6 +125,8 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if (mOptionsHandler.onOptionsItemSelected(item))
+            return true;
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -147,13 +150,49 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
 
     }
 
+    private String readArticle(String name) {
+        try {
+            return FileUtils.convertStreamToString(getBaseContext().getAssets().open("articles/"+name));
+        } catch (Exception e) {
+            return "<strong>error reading article</strong>";
+        }
+    }
+
+    private CharSequence loadArticle(String fileName) {
+        String article = readArticle(fileName);
+        CharSequence content = Html.fromHtml(article, new Html.ImageGetter() {
+            /**
+             * load images from assets/ folder
+             * @param source - usually value for 'src' attribute of <img> tag
+             * @return Drawable object
+             */
+            @Override
+            public Drawable getDrawable(String source) {
+                Context ctx = getApplicationContext();
+                AssetManager assetManager = ctx.getAssets();
+
+                InputStream is = null;
+                try {
+                    is = assetManager.open("articles/" + source);
+                } catch (IOException e) {
+                    return null;
+                }
+                Bitmap bitmap = BitmapFactory.decodeStream(is);
+                Drawable result = new BitmapDrawable(getResources(), bitmap);
+                result.setBounds(0, 0, result.getIntrinsicWidth(),
+                        result.getIntrinsicHeight());
+                return result;
+            }
+        }, new HtmlTagHandler());
+        return content;
+    }
     /*
     * load articles in backround
     *
     *
     */
     private void loadArticles() {
-        new AsyncTask<Void,Void,Void>() {
+        new AsyncTask<Void,Void,CharSequence>() {
             private SpannableStringBuilder mText = new SpannableStringBuilder();
             private SparseArray<String> mArticles = new SparseArray<String>();
 
@@ -164,59 +203,23 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
             }
 
             @Override
-            protected Void doInBackground(Void... params) {
-                List<String> fileNames = listArticles();
-                for (String fileName : fileNames) {
-                    String article = readArticle(fileName);
-                    CharSequence content = Html.fromHtml(article, new Html.ImageGetter() {
-                        /**
-                         * load images from assets/ folder
-                         * @param source - usually value for 'src' attribute of <img> tag
-                         * @return Drawable object
-                         */
-                        @Override
-                        public Drawable getDrawable(String source) {
-                            Context ctx = getApplicationContext();
-                            AssetManager assetManager = ctx.getAssets();
-
-                            InputStream is = null;
-                            try {
-                                is = assetManager.open("articles/" + source);
-                            } catch (IOException e) {
-                                return null;
-                            }
-                            Bitmap bitmap = BitmapFactory.decodeStream(is);
-                            Drawable result = new BitmapDrawable(getResources(), bitmap);
-                            result.setBounds(0, 0, result.getIntrinsicWidth(),
-                                    result.getIntrinsicHeight());
-                            return result;
-                        }
-                    }, new HtmlTagHandler());
-                    ClickableSpan[] clickableSpans = mText.getSpans(0, mText.length(), ClickableSpan.class);
-                    mArticles.put(mText.length(),fileName);
-                    mText.append(content);
-                }
-
-                return null;
+            protected CharSequence doInBackground(Void... params) {
+                return loadArticle("opengles1.html");
             }
 
             @Override
-            protected void onPostExecute(Void result) {
+            protected void onPostExecute(CharSequence result) {
                 ArticlesFlowActivity.this.mArticles = mArticles;
-                mAdapter.getOptions().setImagePlacementHandler(new ImagePlacementHandler.DefaultImagePlacementHandler());
-                mAdapter.setText(mText);
-
+                HyphenPattern pat = PatternsLoader.getInstance(getBaseContext()).getHyphenPatternAssets("en_us.hyphen.dat");
+                mAdapter.getOptions()
+                        // .setImagePlacementHandler(new ImagePlacementHandler.DefaultImagePlacementHandler())
+                        .setLineBreaker(HyphenLineBreaker.getInstance(pat));
+                mAdapter.setText(result);
                 mPager.setAdapter(mAdapter);
                 mPager.setOnPageChangeListener(ArticlesFlowActivity.this);
             }
 
-            private String readArticle(String name) {
-                try {
-                    return FileUtils.convertStreamToString(getBaseContext().getAssets().open("articles/"+name));
-                } catch (Exception e) {
-                    return "<strong>error reading article</strong>";
-                }
-            }
+
 
             private List<String> listArticles() {
                 return new ArrayList(mTitles.keySet());

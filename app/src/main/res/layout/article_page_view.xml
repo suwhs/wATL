@@ -42,9 +42,10 @@
                 android:id="@+id/pagesTotal"/>
         </LinearLayout>
     </FrameLayout>
+
     <su.whs.watl.ui.MultiColumnTextViewEx
         android:id="@+id/contentTextView"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:textIsSelectable="true"
         android:layout_alignParentTop="true"
