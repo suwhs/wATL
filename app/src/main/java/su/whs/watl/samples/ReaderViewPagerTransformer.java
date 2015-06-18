@@ -4,7 +4,6 @@ package su.whs.watl.samples;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
-
 import android.view.View;
 /*
  * ViewPager transformation animation invoked when a visible/attached page is scrolled - before
@@ -14,6 +13,8 @@ import android.view.View;
  * Usage: viewPager.setPageTransformer(false, new ReaderViewPagerTransformer(TransformType.FLOW));
  */
 public class ReaderViewPagerTransformer implements ViewPager.PageTransformer {
+    private static final String TAG = "RVPT";
+
     public enum TransformType {
         FLOW,
         DEPTH,
@@ -104,4 +105,5 @@ public class ReaderViewPagerTransformer implements ViewPager.PageTransformer {
         page.setScaleX(scale);
         page.setScaleY(scale);
     }
+
 }

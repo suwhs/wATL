@@ -106,7 +106,8 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
         mPager.setPageMargin(2);
         mPager.setPageMarginDrawable(android.R.color.background_dark);
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB)
-            mPager.setPageTransformer(false, new ReaderViewPagerTransformer(ReaderViewPagerTransformer.TransformType.SLIDE_OVER));
+            mPager.setPageTransformer(false, new ReaderViewPagerTransformer(ReaderViewPagerTransformer.TransformType.FLOW));
+
         mOptionsHandler = new TextOptionsHandler(mAdapter.getOptions());
         loadArticles();
     }
@@ -146,8 +147,15 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
     }
 
     @Override
-    public void onPageScrollStateChanged(int i) {
-
+    public void onPageScrollStateChanged(int state) {
+        // ViewPager BUG WORKAROUND
+        if (state==ViewPager.SCROLL_STATE_IDLE) {
+            for (int i=0; i<mPager.getChildCount(); i++) {
+                View child = mPager.getChildAt(i);
+                child.destroyDrawingCache();
+            }
+            mPager.invalidate();
+        }
     }
 
     private String readArticle(String name) {
