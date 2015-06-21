@@ -34,7 +34,7 @@ public class TextViewExScrollActivity extends ActionBarActivity {
         tv.setText(text);
         tv.setTextIsSelectable(true);
         tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
-        opts = new TextOptionsHandler(tv.getOptions());
+        opts = new TextOptionsHandler(this,tv.getOptions());
     }
 
     @Override

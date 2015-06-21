@@ -98,6 +98,7 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
 
     private ArticlesPagesAdapter mAdapter = new ArticlesPagesAdapter();
     private TextOptionsHandler mOptionsHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,14 +109,39 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB)
             mPager.setPageTransformer(false, new ReaderViewPagerTransformer(ReaderViewPagerTransformer.TransformType.FLOW));
 
-        mOptionsHandler = new TextOptionsHandler(mAdapter.getOptions());
+        mOptionsHandler = new TextOptionsHandler(this,mAdapter.getOptions());
         loadArticles();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle out) {
+        super.onSaveInstanceState(out);
+        out.putBundle("ADAPTER", mAdapter.getOptions().getState());
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle in) {
+        super.onRestoreInstanceState(in);
+        if (in.containsKey("ADAPTER")) {
+            mAdapter.getOptions().set(in.getBundle("ADAPTER"));
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.text_options, menu);
+        mOptionsHandler.restoreState(menu);
         return true;
     }
 
