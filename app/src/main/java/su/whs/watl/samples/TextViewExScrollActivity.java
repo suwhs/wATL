@@ -41,6 +41,7 @@ public class TextViewExScrollActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.text_options, menu);
+        opts.restoreState(menu);
         return true;
     }
 
@@ -59,4 +60,21 @@ public class TextViewExScrollActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle out) {
+        super.onSaveInstanceState(out);
+        TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
+        out.putBundle("OPTIONS",tv.getOptions().getState());
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle in) {
+        super.onRestoreInstanceState(in);
+        if (in.containsKey("OPTIONS")) {
+            TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
+            tv.getOptions().set(in.getBundle("OPTIONS"));
+        }
+    }
+
 }

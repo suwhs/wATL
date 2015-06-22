@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:id="@+id/font_size">
         <item android:id="@+id/bigfont"
-            android:title="big font"></item>
-        <item android:id="@+id/medfont"
+            android:title="big font" android:checkable="true" android:checked="false"></item>
+        <item android:id="@+id/medfont" android:checkable="true" android:checked="false"
             android:title="medium font"></item>
-        <item android:id="@+id/smallfont"
+        <item android:id="@+id/smallfont" android:checkable="true" android:checked="true"
             android:title="small font"></item>
     </group>
     <group android:id="@+id/linebreaks">

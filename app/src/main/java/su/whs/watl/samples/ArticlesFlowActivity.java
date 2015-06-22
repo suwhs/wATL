@@ -114,16 +114,6 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle out) {
         super.onSaveInstanceState(out);
         out.putBundle("ADAPTER", mAdapter.getOptions().getState());
