@@ -9,8 +9,8 @@
             android:title="small font"></item>
     </group>
     <group android:id="@+id/linebreaks">
-        <item android:title="simple" android:id="@+id/simple_linebreak"/>
-        <item android:title="hyphenation" android:id="@+id/hyphenation_linebreak"/>
+        <!-- <item android:title="simple" android:id="@+id/simple_linebreak"/>
+        <item android:title="hyphenation" android:id="@+id/hyphenation_linebreak"/> -->
         <item android:title="filter empty lines" android:id="@+id/filter_empty" android:checkable="true" android:checked="true"/>
         <item android:id="@+id/additionals_paragraphs_margins" android:title="paragraph margins" android:checkable="true" android:checked="false"/>
     </group>

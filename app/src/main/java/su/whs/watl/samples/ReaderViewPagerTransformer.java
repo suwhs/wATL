@@ -41,7 +41,8 @@ public class ReaderViewPagerTransformer implements ViewPager.PageTransformer {
 
         switch (mTransformType) {
             case FLOW:
-                page.setRotationY(position * -30f);
+                if (position>-1f && position<1f)
+                    page.setRotationY(position * -30f);
                 return;
 
             case SLIDE_OVER:
