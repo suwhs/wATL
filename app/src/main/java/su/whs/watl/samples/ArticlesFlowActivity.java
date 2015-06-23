@@ -107,7 +107,10 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
         mPager.setPageMargin(2);
         mPager.setPageMarginDrawable(android.R.color.background_dark);
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB)
-            mPager.setPageTransformer(false, new ReaderViewPagerTransformer(ReaderViewPagerTransformer.TransformType.FLOW));
+            mPager.setPageTransformer(false,
+                    new ReaderViewPagerTransformer(
+                            ReaderViewPagerTransformer.TransformType.SLIDE_OVER
+                    ));
 
         mOptionsHandler = new TextOptionsHandler(this,mAdapter.getOptions());
         loadArticles();
