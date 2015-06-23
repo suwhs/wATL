@@ -4,6 +4,7 @@ package su.whs.watl.samples;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 /*
  * ViewPager transformation animation invoked when a visible/attached page is scrolled - before
@@ -41,8 +42,12 @@ public class ReaderViewPagerTransformer implements ViewPager.PageTransformer {
 
         switch (mTransformType) {
             case FLOW:
-                if (position>-1f && position<1f)
+                if (position>-0.9f && position<0.9f) {
                     page.setRotationY(position * -30f);
+                    Log.v(TAG, "FLOW:" + position);
+                } else
+                    page.setRotation(0f);
+                    page.destroyDrawingCache();
                 return;
 
             case SLIDE_OVER:
