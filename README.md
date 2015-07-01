@@ -1,6 +1,9 @@
 wATL open source parts 
 ==========
 
+NEWS
+
+
 licensed under GPL v3 
 
 *wATL* is a library for android applications with support for formatted text justification, image wrapping and more 
@@ -39,6 +42,9 @@ dependencies {
 
 News
 ======
+UPDATE 01 Jul 15
+ exctract wATL library to git submodule - standalone library hosted at <a href="https://github.com/suwhs/wATLlib">github.com/suwhs/wATLlib</a>
+ now wATL library contains adapter for ViewPager - to show paginated text
 
 UPDATE 06 Apr 15
  added MultiColumnTextViewEx example - widget, that supports automatic columns count calculating depends on screen resolution. limits sets via setColumnLimits(minColumnWidth,maxColumnWidth) or forcing columns count via setColumnsCount(int numOfColumns)
