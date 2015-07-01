@@ -66,8 +66,8 @@
                 android:value="su.whs.watl.samples.MainActivity" />
         </activity>
         <activity
-            android:name=".ArticlesFlowActivity"
-            android:label="@string/title_activity_articles_flow"
+            android:name=".ViewPagerActivity"
+            android:label="@string/title_activity_view_pager"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -1,7 +1,3 @@
 [submodule "watllibrarylite"]
 	path = wATLlib
 	url = git@github.com:suwhs/wATLlib.git
-
-[submodule "android-page-curl"]
-        path = android-page-curl
-        url = git@github.com:MysticTreeGames/android-page-curl.git

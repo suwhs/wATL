@@ -23,13 +23,13 @@ import su.whs.watl.ui.MultiColumnTextViewEx;
 
 
 public class MultiColumnTextViewExActivity extends ActionBarActivity {
-
+    private TextOptionsHandler opts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multi_column_text_view_ex);
         MultiColumnTextViewEx tv = (MultiColumnTextViewEx) findViewById(R.id.textView);
-
+        opts = new TextOptionsHandler(this,tv.getOptions());
         CharSequence text = Html.fromHtml(SampleContent.get(), new Html.ImageGetter() {
             /**
              * load images from assets/ folder
@@ -65,7 +65,7 @@ public class MultiColumnTextViewExActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_multi_column_text_view_ex, menu);
+        getMenuInflater().inflate(R.menu.text_options, menu);
         return true;
     }
 
@@ -74,6 +74,8 @@ public class MultiColumnTextViewExActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        if (opts.onOptionsItemSelected(item))
+            return true;
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement

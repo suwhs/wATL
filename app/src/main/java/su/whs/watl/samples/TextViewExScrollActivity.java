@@ -11,6 +11,7 @@ import su.whs.watl.ui.TextViewEx;
 
 
 public class TextViewExScrollActivity extends ActionBarActivity {
+    private TextOptionsHandler opts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +34,14 @@ public class TextViewExScrollActivity extends ActionBarActivity {
         tv.setText(text);
         tv.setTextIsSelectable(true);
         tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
+        opts = new TextOptionsHandler(this,tv.getOptions());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_text_view_ex_scroll, menu);
+        getMenuInflater().inflate(R.menu.text_options, menu);
+        opts.restoreState(menu);
         return true;
     }
 
@@ -48,7 +51,8 @@ public class TextViewExScrollActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        if (opts.onOptionsItemSelected(item))
+            return true;
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -56,4 +60,21 @@ public class TextViewExScrollActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle out) {
+        super.onSaveInstanceState(out);
+        TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
+        out.putBundle("OPTIONS",tv.getOptions().getState());
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle in) {
+        super.onRestoreInstanceState(in);
+        if (in.containsKey("OPTIONS")) {
+            TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
+            tv.getOptions().set(in.getBundle("OPTIONS"));
+        }
+    }
+
 }

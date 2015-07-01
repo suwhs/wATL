@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/font_size">
+        <item android:id="@+id/bigfont"
+            android:title="big font" android:checkable="true" android:checked="false"></item>
+        <item android:id="@+id/medfont" android:checkable="true" android:checked="false"
+            android:title="medium font"></item>
+        <item android:id="@+id/smallfont" android:checkable="true" android:checked="true"
+            android:title="small font"></item>
+    </group>
+    <group android:id="@+id/linebreaks">
+        <!-- <item android:title="simple" android:id="@+id/simple_linebreak"/>
+        <item android:title="hyphenation" android:id="@+id/hyphenation_linebreak"/> -->
+        <item android:title="filter empty lines" android:id="@+id/filter_empty" android:checkable="true" android:checked="true"/>
+        <item android:id="@+id/additionals_paragraphs_margins" android:title="paragraph margins" android:checkable="true" android:checked="false"/>
+    </group>
+    <!-- <group android:id="@+id/articles">
+        <item android:id="@+id/science1" android:title="article 1"/>
+        <item android:id="@+id/science2" android:title="article 2"/>
+        <item android:id="@+id/tutorial1" android:title="opengl tutorial"/>
+    </group> -->
+</menu>
