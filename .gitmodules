@@ -1,9 +1,3 @@
 [submodule "watllibrarylite"]
 	path = wATLlib
 	url = git@github.com:suwhs/wATLlib.git
-[submodule "helpoverlay"]
-	path = helpoverlay
-	url = git@bitbucket.org:igor_boulliev/helpoverlay.git
-[submodule "whsutils"]
-	path = whsutils
-	url = git@bitbucket.org:igor_boulliev/whsutils.git

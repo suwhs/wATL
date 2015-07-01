@@ -1,1 +1,1 @@
-include ':whsutils', ':helpoverlay', ':app', ':wATLlib'
+include ':whsutils', ':app', ':wATLlib'

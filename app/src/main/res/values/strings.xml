@@ -7,10 +7,11 @@
     <string name="title_activity_hyphen_text_view_ex">Hyphenation</string>
     <string name="title_activity_another_hyphen_text_view_ex">Image Wrap</string>
     <string name="title_activity_about">About</string>
+    <string name="title_activity_view_pager">Paginated Article</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_about">About</string>
     <string name="title_activity_multi_column_text_view_ex">MultiColumn Sample</string>
-    <string name="title_activity_articles_flow">ArticlesFlowActivity</string>
+
     <string name="text_view_ws_help">Usual TextView with selection support</string>
 </resources>

@@ -37,7 +37,7 @@ import su.whs.watl.text.hyphen.HyphenPattern;
 import su.whs.watl.text.hyphen.PatternsLoader;
 import su.whs.watl.ui.MultiColumnTextViewEx;
 
-public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener {
+public class ViewPagerActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener {
 
     private ViewPager mPager;
     private SparseArray<String> mArticles;
@@ -51,15 +51,19 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
         TextView number;
         TextView total;
         TextView title;
+        View p;
         int _n = -1;
         int _t = -1;
+
         public IndicatorHolder(View page) {
             number = (TextView) page.findViewById(R.id.pageNo);
             total = (TextView) page.findViewById(R.id.pagesTotal);
-            page.setTag(this);
+            p = page;
+            p.setTag(this);
         }
         public void set(int n, int t) {
             if (_n==n && _t==t) return;
+            p.destroyDrawingCache();
             number.setText(String.format("%d",n+1));
             total.setText(String.format("%d",t));
             _n = n;
@@ -87,7 +91,7 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
         public View getViewForPage(int position) {
             /* just inflate layout contains textviewex-derived view with id=@android:id/content */
             View layout = LayoutInflater
-                    .from(ArticlesFlowActivity.this)
+                    .from(ViewPagerActivity.this)
                     .inflate(R.layout.article_page_view, null, false);
             MultiColumnTextViewEx tve = (MultiColumnTextViewEx) layout.findViewById(R.id.contentTextView);
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
@@ -231,19 +235,19 @@ public class ArticlesFlowActivity extends ActionBarActivity implements ViewPager
 
             @Override
             protected CharSequence doInBackground(Void... params) {
-                return loadArticle("opengles1.html");
+                return loadArticle("science1a.html" /*"opengles1.html"*/);
             }
 
             @Override
             protected void onPostExecute(CharSequence result) {
-                ArticlesFlowActivity.this.mArticles = mArticles;
+                ViewPagerActivity.this.mArticles = mArticles;
                 HyphenPattern pat = PatternsLoader.getInstance(getBaseContext()).getHyphenPatternAssets("en_us.hyphen.dat");
                 mAdapter.getOptions()
                         // .setImagePlacementHandler(new ImagePlacementHandler.DefaultImagePlacementHandler())
                         .setLineBreaker(HyphenLineBreaker.getInstance(pat));
                 mAdapter.setText(result);
                 mPager.setAdapter(mAdapter);
-                mPager.setOnPageChangeListener(ArticlesFlowActivity.this);
+                mPager.setOnPageChangeListener(ViewPagerActivity.this);
             }
 
 

@@ -76,7 +76,7 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
                         break;
                     case 5:
                         if (hyphenatorReady)
-                            i.setClass(getBaseContext(), ArticlesFlowActivity.class);
+                            i.setClass(getBaseContext(), ViewPagerActivity.class);
                         else {
                             Toast.makeText(getBaseContext(), "please wait - hyphenator loading...", Toast.LENGTH_LONG).show();
                             return;
