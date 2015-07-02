@@ -2,8 +2,8 @@ package su.whs.watl.samples;
 
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,7 +32,7 @@ public class TextViewWSActivity extends ActionBarActivity {
 
         tv.setTextIsSelectable(true);
         if (Build.VERSION.SDK_INT > 10)
-            tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
+           tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
     }
 
     @Override

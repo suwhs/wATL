@@ -42,8 +42,13 @@ dependencies {
 
 News
 ======
+
+UPDATE 02 Jul 15
+ fix Demo App crash on old version of Android (2.3.3)
+ BaseTextPagerAdapter now can be attached to ViewPager before setText() call
+
 UPDATE 01 Jul 15
- exctract wATL library to git submodule - standalone library hosted at <a href="https://github.com/suwhs/wATLlib">github.com/suwhs/wATLlib</a>
+ extract wATL library to git submodule - standalone library hosted at <a href="https://github.com/suwhs/wATLlib">github.com/suwhs/wATLlib</a>
  now wATL library contains adapter for ViewPager - to show paginated text
 
 UPDATE 06 Apr 15

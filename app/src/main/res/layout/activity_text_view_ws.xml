@@ -15,11 +15,4 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:contentDescription="@string/text_view_ws_help"/>
-
-    <su.whs.whol.HelpOverlay
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone" />
 </RelativeLayout>

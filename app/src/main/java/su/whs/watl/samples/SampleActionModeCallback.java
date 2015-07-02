@@ -8,8 +8,9 @@ import android.os.Build;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import su.whs.watl.ui.TextViewWS;
 
 /**
  * Created by igor n. boulliev on 15.02.15.
@@ -18,9 +19,9 @@ import android.widget.Toast;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class SampleActionModeCallback implements ActionMode.Callback {
-    public TextView mTextView = null;
+    public TextViewWS mTextView = null;
 
-    public SampleActionModeCallback(TextView textView) {
+    public SampleActionModeCallback(TextViewWS textView) {
         mTextView = textView;
     }
 

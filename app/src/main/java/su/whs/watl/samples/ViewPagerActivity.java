@@ -1,5 +1,6 @@
 package su.whs.watl.samples;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
@@ -15,6 +16,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.util.SparseArray;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -117,6 +119,10 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
                     ));
 
         mOptionsHandler = new TextOptionsHandler(this,mAdapter.getOptions());
+        mPager.setAdapter(mAdapter);
+        if (Build.VERSION.SDK_INT>10) {
+            mAdapter.setCustomSelectionActionModeCallback(new PageActionModeCallback());
+        }
         loadArticles();
     }
 
@@ -246,7 +252,6 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
                         // .setImagePlacementHandler(new ImagePlacementHandler.DefaultImagePlacementHandler())
                         .setLineBreaker(HyphenLineBreaker.getInstance(pat));
                 mAdapter.setText(result);
-                mPager.setAdapter(mAdapter);
                 mPager.setOnPageChangeListener(ViewPagerActivity.this);
             }
 
@@ -257,5 +262,50 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
             }
 
         }.execute();
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private class PageActionModeCallback implements ActionMode.Callback {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            // menu.add(0, DEFINITION, 0, "Definition").setIcon(R.drawable.ic_action_book);
+            menu.add(0, android.R.id.copy, 0, "copy").setIcon(R.drawable.ic_action_name);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            // Remove the "select all" option
+            menu.removeItem(android.R.id.selectAll);
+            // Remove the "cut" option
+            menu.removeItem(android.R.id.cut);
+            // Remove the "copy all" option
+            // menu.removeItem(android.R.id.copy);
+            return true;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case android.R.id.copy:
+                    /*
+                    CharSequence text = mTextView.getText().subSequence(mTextView.getSelectionStart(), mTextView.getSelectionEnd());
+                    ClipboardManager manager = (ClipboardManager) mTextView.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                    manager.setPrimaryClip(ClipData.newPlainText(null, text));
+                    mTextView.setSelected(false);
+                    Toast.makeText(mTextView.getContext(), "Text copied to clipboard", Toast.LENGTH_LONG).show();
+                    mode.finish(); */
+                    return true;
+                default:
+                    break;
+            }
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+
+        }
     }
 }

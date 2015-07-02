@@ -1,6 +1,7 @@
 package su.whs.watl.samples;
 
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
@@ -33,7 +34,8 @@ public class TextViewExScrollActivity extends ActionBarActivity {
         }, null);
         tv.setText(text);
         tv.setTextIsSelectable(true);
-        tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
+        if (Build.VERSION.SDK_INT>10)
+            tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
         opts = new TextOptionsHandler(this,tv.getOptions());
     }
 

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
@@ -57,7 +58,8 @@ public class MultiColumnTextViewExActivity extends ActionBarActivity {
         tv.setColumnLimits(300, 600);
         tv.setText(text);
         tv.setTextIsSelectable(true);
-        tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
+        if (Build.VERSION.SDK_INT>10)
+            tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
         HyphenPattern pat = PatternsLoader.getInstance(this).getHyphenPatternAssets("en_us.hyphen.dat");
         tv.getOptions().setLineBreaker(HyphenLineBreaker.getInstance(pat));
     }
