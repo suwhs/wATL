@@ -95,9 +95,12 @@ public class AboutActivity extends ActionBarActivity {
         tv.setText(text);
         tv.setTextIsSelectable(true);
         tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
-        tv.getOptions().setImagePlacementHandler(null);
+
         HyphenPattern pat = PatternsLoader.getInstance(this).getHyphenPatternAssets("en_us.hyphen.dat");
-        tv.getOptions().setLineBreaker(HyphenLineBreaker.getInstance(pat));
+        tv.getOptions()
+                .setLineBreaker(HyphenLineBreaker.getInstance(pat))
+                .setNewLineLeftMargin(25)
+                .setNewLineTopMargin(10);
     }
 
     @Override
