@@ -6,7 +6,9 @@ import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -96,6 +98,7 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
                     .from(ViewPagerActivity.this)
                     .inflate(R.layout.article_page_view, null, false);
             MultiColumnTextViewEx tve = (MultiColumnTextViewEx) layout.findViewById(R.id.contentTextView);
+            layout.setBackgroundColor(android.R.color.white); // set background for buggy android versions
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
                 tve.setColumnsCount(2);
             return layout;
@@ -111,7 +114,8 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
         setContentView(R.layout.activity_articles_flow);
         mPager = (ViewPager) findViewById(R.id.viewPager);
         mPager.setPageMargin(2);
-        mPager.setPageMarginDrawable(android.R.color.background_dark);
+        if (Build.VERSION.SDK_INT>Build.VERSION_CODES.GINGERBREAD_MR1)
+            mPager.setPageMarginDrawable(new ColorDrawable(Color.BLACK));
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB)
             mPager.setPageTransformer(false,
                     new ReaderViewPagerTransformer(
@@ -254,8 +258,6 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
                 mAdapter.setText(result);
                 mPager.setOnPageChangeListener(ViewPagerActivity.this);
             }
-
-
 
             private List<String> listArticles() {
                 return new ArrayList(mTitles.keySet());
