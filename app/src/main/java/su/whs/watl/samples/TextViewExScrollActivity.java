@@ -42,7 +42,7 @@ public class TextViewExScrollActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.text_options, menu);
+        getMenuInflater().inflate(R.menu.menu_text_view_ex_scroll, menu);
         opts.restoreState(menu);
         return true;
     }
@@ -56,7 +56,20 @@ public class TextViewExScrollActivity extends ActionBarActivity {
         if (opts.onOptionsItemSelected(item))
             return true;
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.test_set_text) {
+            TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
+            CharSequence text = Html.fromHtml(SampleContent.LOREM,new Html.ImageGetter() {
+
+                @Override
+                public Drawable getDrawable(String source) {
+                    Drawable result = getResources()
+                            .getDrawable(R.drawable.pinfish_small);
+                    result.setBounds(0, 0, result.getIntrinsicWidth(),
+                            result.getIntrinsicHeight());
+                    return result;
+                }
+            }, null);
+            tv.setText(text);
             return true;
         }
 
