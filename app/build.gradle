@@ -1,6 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'watl'
+            storeFile file('${System.properties[\'user.home\']}/AndroidStudioProjects/watldemo.keystore')
+        }
+    }
+
     compileSdkVersion 21
     buildToolsVersion "21.0.2"
     defaultConfig {
