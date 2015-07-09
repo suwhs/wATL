@@ -68,6 +68,11 @@ public class AnotherHyphenTextViewExActivity extends ActionBarActivity {
             tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
         HyphenPattern pat = PatternsLoader.getInstance(this).getHyphenPatternAssets("en_us.hyphen.dat");
         tv.getOptions().setLineBreaker(HyphenLineBreaker.getInstance(pat));
+        /* screenshoting */
+        tv.getOptions()
+                .setLineSpacingMultiplier(0.5f)
+                .setLineSpacingAdd(-4)
+                .setNewLineLeftMargin(25);
     }
 
     @Override

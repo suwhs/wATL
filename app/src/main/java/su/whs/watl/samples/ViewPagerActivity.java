@@ -122,6 +122,8 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
                             ReaderViewPagerTransformer.TransformType.SLIDE_OVER
                     ));
 
+        mAdapter.getOptions()
+                .setDrawableMinimumScaleFactor(0.6f);
         mOptionsHandler = new TextOptionsHandler(this,mAdapter.getOptions());
         mPager.setAdapter(mAdapter);
         if (Build.VERSION.SDK_INT>10) {
