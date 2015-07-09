@@ -1,6 +1,7 @@
 package su.whs.watl.samples;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -89,6 +90,10 @@ public class TextOptionsHandler {
     }
 
     private void uncheckAll() {
+        if (mi_textBig==null||mi_textMed==null||mi_textSmall==null) {
+            Log.e("TextOptionsHandler", "missing call restoreState(menu) - check onCreateOptionsMenu()");
+            return;
+        }
         mi_textBig.setChecked(false);
         mi_textMed.setChecked(false);
         mi_textSmall.setChecked(false);
