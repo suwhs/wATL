@@ -1,12 +1,21 @@
-wATL open source parts 
+wATL library Demo sources
 ==========
 
-NEWS
+NB: library itself hosted now in separate repository - <a href="https://github.com/suwhs/wATLlib">github.com/suwhs/wATLlib</a>
 
+License
+========= 
+GPL v3 (<a href="https://www.bountysource.com/teams/whssu/fundraiser">You may support opensource project on bountysource.com</a>)
 
-licensed under GPL v3 
-
-*wATL* is a library for android applications with support for formatted text justification, image wrapping and more 
+Description
+======
+*wATL* is a library for android applications with features:
+  - formatted text full justification,
+  - wrap text around images, 
+  - auto-hyphenation,
+  - adapter for show paginated article with stock ViewPager
+  - supported Android version - 2.3 - 5.1+ (both runtimes - ART and DALVIK)
+ 
 
 Demo Application available on Google Play
 
@@ -14,33 +23,22 @@ Demo Application available on Google Play
 <img src="https://developer.android.com/images/brand/en_generic_rgb_wo_45.png" alt="Get it on Google Play" />
 </a>
 
-[![Demo Video on Youtube](http://img.youtube.com/vi/ui3HLkEK9T0/0.jpg)]
+[![Demo Video on Youtube](http://img.youtube.com/vi/ui3HLkEK9T0/0.jpg)](https://www.youtube.com/watch?v=ui3HLkEK9T0)
 
 Quick Start
 ======
 Usage:
 
-1. add maven repository url to build.gradle (top-level)
-<pre>
-allprojects {
-    repositories {
-        mavenCentral()
-        jcenter()
-        maven {
-            url  'https://raw.githubusercontent.com/suwhs/maven-repository/master/'
-        }
-    }
-}
-</pre>
+wATLlib published on jcenter repository, so just
 
-2. add dependency to module's builed.gradle
-<pre>
-dependencies {
-....
-     compile 'su.whs.watl:watllibrarylite:+'
-}
-</pre>
+add to dependencies :
+```gradle
+compile 'su.whs:wATLlib:+'
+```
 
+more detailed <a href="http://whs.su/products/watl-widgets-library-for-android/watl-library-quickstart-guide/">quick start guide</a>
+
+(also, see <a href="http://whs.su">commercial licenses for proprietary apps on whs.su</a>)
 
 News
 ======
