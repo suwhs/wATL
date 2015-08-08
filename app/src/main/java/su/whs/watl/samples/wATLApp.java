@@ -95,6 +95,7 @@ public class wATLApp extends Application {
             protected void onPostExecute(ContentLoader.Article article) {
                 try {
                     article.load(getApplicationContext(),view);
+                    view.setLoadingState(false,100);
                 } catch (Exception e) {
                     view.setContent(null,null,null,"error reading article: " + e.toString());
                 }

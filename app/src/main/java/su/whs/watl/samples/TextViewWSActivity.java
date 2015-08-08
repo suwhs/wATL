@@ -1,38 +1,21 @@
 package su.whs.watl.samples;
 
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import su.whs.watl.ui.TextViewWS;
 
 
-public class TextViewWSActivity extends ActionBarActivity {
-
+public class TextViewWSActivity extends ActionBarActivity implements ArticleView {
+    private static final String TAG="TextViewWS.Demo";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_view_ws);
-        TextViewWS tv = (TextViewWS) findViewById(R.id.textView);
-        tv.setText(Html.fromHtml(SampleContent.LOREM,new Html.ImageGetter() {
-
-            @Override
-            public Drawable getDrawable(String source) {
-                Drawable result = getResources()
-                        .getDrawable(R.drawable.pinfish_small);
-                result.setBounds(0, 0, result.getIntrinsicWidth(),
-                        result.getIntrinsicHeight());
-                return result;
-            }
-        }, null));
-
-        tv.setTextIsSelectable(true);
-        if (Build.VERSION.SDK_INT > 10)
-           tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
+        ((wATLApp)getApplication()).getArticle(ContentLoader.ARTICLE_SCIENCE2, this);
     }
 
     @Override
@@ -55,5 +38,21 @@ public class TextViewWSActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void setLoadingState(boolean state, int percents) {
+
+    }
+
+    @Override
+    public void setContent(String title, String author, String source, CharSequence content) {
+        TextViewWS tv = (TextViewWS) findViewById(R.id.textView);
+        tv.setText(content);
+
+        tv.setTextIsSelectable(true);
+        if (Build.VERSION.SDK_INT > 10)
+            tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
+
     }
 }

@@ -1,18 +1,22 @@
 package su.whs.watl.samples;
 
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import su.whs.watl.ui.TextViewEx;
 
 
-public class TextViewExScrollActivity extends ActionBarActivity {
+public class TextViewExScrollActivity extends ActionBarActivity implements ArticleView {
     private TextOptionsHandler opts;
+    private static final String[] articles = new String[] {
+            ContentLoader.ARTICLE_SCIENCE1,
+            ContentLoader.ARTICLE_SCIENCE2,
+            ContentLoader.ARTICLE_OPENGLES,
+    };
+    private int currentArticle = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,22 +24,8 @@ public class TextViewExScrollActivity extends ActionBarActivity {
         setContentView(R.layout.activity_text_view_ex_scroll);
 
         TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
-
-        CharSequence text = Html.fromHtml(SampleContent.LOREM,new Html.ImageGetter() {
-
-            @Override
-            public Drawable getDrawable(String source) {
-                Drawable result = getResources()
-                        .getDrawable(R.drawable.pinfish_small);
-                result.setBounds(0, 0, result.getIntrinsicWidth(),
-                        result.getIntrinsicHeight());
-                return result;
-            }
-        }, null);
-        tv.setText(text);
-        tv.setTextIsSelectable(true);
-        if (Build.VERSION.SDK_INT>10)
-            tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
+        ((wATLApp)getApplication()).getArticle(articles[currentArticle],this);
+        currentArticle++;
         opts = new TextOptionsHandler(this,tv.getOptions());
     }
 
@@ -57,19 +47,9 @@ public class TextViewExScrollActivity extends ActionBarActivity {
             return true;
         //noinspection SimplifiableIfStatement
         if (id == R.id.test_set_text) {
-            TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
-            CharSequence text = Html.fromHtml(SampleContent.LOREM,new Html.ImageGetter() {
-
-                @Override
-                public Drawable getDrawable(String source) {
-                    Drawable result = getResources()
-                            .getDrawable(R.drawable.pinfish_small);
-                    result.setBounds(0, 0, result.getIntrinsicWidth(),
-                            result.getIntrinsicHeight());
-                    return result;
-                }
-            }, null);
-            tv.setText(text);
+            if (currentArticle>2) currentArticle=0;
+            ((wATLApp)getApplication()).getArticle(articles[currentArticle],this);
+            currentArticle++;
             return true;
         }
 
@@ -92,4 +72,17 @@ public class TextViewExScrollActivity extends ActionBarActivity {
         }
     }
 
+    @Override
+    public void setLoadingState(boolean state, int percents) {
+
+    }
+
+    @Override
+    public void setContent(String title, String author, String source, CharSequence content) {
+        TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
+        tv.setText(content);
+        tv.setTextIsSelectable(true);
+        if (Build.VERSION.SDK_INT>10)
+            tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
+    }
 }

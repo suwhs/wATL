@@ -22,12 +22,19 @@ import su.whs.watl.text.HtmlTagHandler;
  * Created by igor n. boulliev on 07.06.15.
  */
 public class ContentLoader {
+    public static final String ARTICLE_LOREM_IPSUM = "lorem";
+    public static final String ARTICLE_WORLD_OF_SHEAKSPEARE = "sheakspeare";
+    public static final String ARTICLE_WESNOTH = "wesnoth";
+    public static final String ARTICLE_OPENGLES = "opengles1";
+    public static final String ARTICLE_SCIENCE1 = "science1";
+    public static final String ARTICLE_SCIENCE2 = "science2";
+
     private static Map<String,String> mArticles = new HashMap<String,String>();
     static {
         mArticles.put("lorem", null);
         mArticles.put("sheakspeare", null);
         mArticles.put("wesnoth", null);
-        mArticles.put("opengles1","onpegles1.html");
+        mArticles.put("opengles1","opengles1.html");
         mArticles.put("science1", "science1a.html");
         mArticles.put("science2", "science2a.html");
     }

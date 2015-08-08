@@ -14,6 +14,8 @@ Demo Application available on Google Play
 <img src="https://developer.android.com/images/brand/en_generic_rgb_wo_45.png" alt="Get it on Google Play" />
 </a>
 
+[![Demo Video on Youtube](http://img.youtube.com/vi/ui3HLkEK9T0/0.jpg)]
+
 Quick Start
 ======
 Usage:
