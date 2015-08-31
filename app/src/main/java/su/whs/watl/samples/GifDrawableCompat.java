@@ -28,7 +28,8 @@ public class GifDrawableCompat extends Drawable implements Animatable {
         @Override
         public void run() {
             nextFrame();
-            scheduleSelf(updateRunable, SystemClock.uptimeMillis()+mDecoder.getNextDelay());
+            if (mStarted)
+                scheduleSelf(updateRunable, SystemClock.uptimeMillis()+mDecoder.getNextDelay());
         }
     };
 
