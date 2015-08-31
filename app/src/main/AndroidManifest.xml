@@ -73,6 +73,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="su.whs.watl.samples.MainActivity" />
         </activity>
+        <activity android:name=".AnimationActivity" android:label="Sample Animation"
+                  android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="su.whs.watl.samples.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

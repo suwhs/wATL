@@ -37,4 +37,5 @@ dependencies {
     compile project(':wATLlib')
     compile project(':whsutils')
     compile 'com.android.support:support-v4:22.1.1'
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
 }

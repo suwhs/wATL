@@ -32,7 +32,7 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
         data.add(getRowData(3));
         data.add(getRowData(4));
         data.add(getRowData(5));
-
+        data.add(getRowData(6));
         SimpleAdapter adapter = new SimpleAdapter(this,data,R.layout.samples_list_item, new String[]  {
             "img", "title", "description"
         }, new int[] { R.id.imageView, R.id.itemTitle, R.id.itemSnippet }) {
@@ -81,6 +81,9 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
                             Toast.makeText(getBaseContext(), "please wait - hyphenator loading...", Toast.LENGTH_LONG).show();
                             return;
                         }
+                        break;
+                    case 6:
+                        i.setClass(getBaseContext(), AnimationActivity.class);
                         break;
                     default:
                         return;
@@ -138,6 +141,11 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
                 title = "Articles";
                 description = "Paged View Demo";
                 img = R.mipmap.ic_logo;
+                break;
+            case 6:
+                title = "Animation";
+                description = "gif in html sample";
+                img = R.drawable.ic_launcher;
                 break;
         }
         result.put("img",img);

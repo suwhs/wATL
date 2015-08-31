@@ -28,12 +28,14 @@ public class ContentLoader {
     public static final String ARTICLE_OPENGLES = "opengles1";
     public static final String ARTICLE_SCIENCE1 = "science1";
     public static final String ARTICLE_SCIENCE2 = "science2";
+    public static final String GIF_ANIMATION = "gif_animation";
 
     private static Map<String,String> mArticles = new HashMap<String,String>();
     static {
         mArticles.put("lorem", null);
         mArticles.put("sheakspeare", null);
         mArticles.put("wesnoth", null);
+        mArticles.put("gif_animation",null);
         mArticles.put("opengles1","opengles1.html");
         mArticles.put("science1", "science1a.html");
         mArticles.put("science2", "science2a.html");
@@ -80,6 +82,8 @@ public class ContentLoader {
                     return "World of William Sheakspeare";
                 } else if (mUuid.equals("wesnoth")) {
                     return "Battle for Wesnoth";
+                } else if (mUuid.equals("gif_animation")) {
+                    return "Gif Animation Sample";
                 } else {
                     return "unknown article";
                 }
@@ -160,6 +164,14 @@ public class ContentLoader {
                             result.setBounds(0, 0, result.getIntrinsicWidth(),
                                     result.getIntrinsicHeight());
                             return result;
+                        }
+                    };
+                } else if (mUuid.equals("gif_animation")) {
+                    content = FileUtils.convertStreamToString(context.getAssets().open("articles/gif_animation.html"));
+                    imageGetter = new Html.ImageGetter() {
+                        @Override
+                        public Drawable getDrawable(String source) {
+                            return new AssetGifDrawable(context,source);
                         }
                     };
                 } else {
