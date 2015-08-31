@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +16,16 @@ import su.whs.watl.samples.utils.GifDecoder;
 /**
  * Created by igor n. boulliev on 31.08.15.
  */
+
+/**
+ * demo code for show animated drawables in TextViewEx
+ *
+ * LazyDrawable required for animation on demand launch,
+ * and for support AOSP < 11
+ *
+ *
+ */
+
 
 public class AssetGifDrawable extends LazyDrawable {
     private String mPath;
@@ -34,7 +45,12 @@ public class AssetGifDrawable extends LazyDrawable {
         setDrawable(drawable);
     }
 
-    /* here we return first frame */
+    /**
+     * readPreviewDrawable() must returns initial image for DynamicDrawableSpan (less resolution version, BW version),
+     * or single frame from animation
+     *
+     * @return
+     */
     @Override
     protected Drawable readPreviewDrawable() {
         if (mLoadingError) return null;
@@ -53,12 +69,19 @@ public class AssetGifDrawable extends LazyDrawable {
         }
     }
 
+    /**
+     * readFullDrawable must returns high-quality version of image, or Animatable instance
+     *
+     * @return
+     */
+
     @Override
     protected Drawable readFullDrawable() {
         if (mLoadingError) return null;
         if (mFullVersionLoaded) return null;
         try {
-             Drawable r = new GifDrawable(mContext.getAssets().open(mPath));
+            /* GifDrawable implements Animatable, so we can show animations */
+             Drawable r = Build.VERSION.SDK_INT>18 ? new GifDrawable(mContext.getAssets().open(mPath)) : new GifDrawableCompat(mContext.getAssets().open(mPath));
             mFullVersionLoaded = true;
             return r;
         } catch (IOException e) {
@@ -67,6 +90,7 @@ public class AssetGifDrawable extends LazyDrawable {
         }
     }
 
+    /* call loadFullImage and launch animation */
     @Override
     public void start() {
         loadFullImage();
