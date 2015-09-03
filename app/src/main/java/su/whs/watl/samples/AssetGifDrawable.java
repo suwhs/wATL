@@ -96,4 +96,8 @@ public class AssetGifDrawable extends LazyDrawable {
         loadFullImage();
         super.start();
     }
+
+    public String getPath() {
+        return mPath;
+    }
 }

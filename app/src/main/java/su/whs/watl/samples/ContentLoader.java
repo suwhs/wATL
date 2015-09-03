@@ -4,10 +4,18 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Html;
+import android.text.Spanned;
+import android.util.Log;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -16,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 import su.whs.utils.FileUtils;
+import su.whs.watl.experimental.SpannedSerializator;
+import su.whs.watl.samples.utils.ArticleSerializer;
 import su.whs.watl.text.HtmlTagHandler;
 
 /**
@@ -47,6 +57,73 @@ public class ContentLoader {
 
     public Article get(String uuid) {
         return new Article(uuid);
+    }
+
+    public void cacheArticleAsSerializedSpanned(final Context context, Runnable onFinish) {
+        for (final String uuid : mArticles.keySet()) {
+            final Article a = get(uuid);
+            if (isSerialized(context,uuid))
+                removeCachedVersion(context,uuid);
+            try {
+                a.load(context, new ArticleView() {
+                    @Override
+                    public void setLoadingState(boolean state, int percents) {
+
+                    }
+
+                    @Override
+                    public void setContent(String title, String author, String source, CharSequence content) {
+                        cacheArticle(context,a.mUuid,title,author,source,content);
+                    }
+                });
+            } catch (Exception e) {
+                Log.e("CL.CACHE", "could not load article : " + uuid);
+                // e.printStackTrace();
+            }
+        }
+        new Handler(Looper.getMainLooper()).post(onFinish);
+    }
+
+    private void cacheArticle(Context context, String uuid, String title, String author, String source, CharSequence content) {
+        ArticleSerializer as = new ArticleSerializer(context,(Spanned)content);
+        File cache = context.getCacheDir();
+        File article = new File(cache,uuid);
+        if (article.exists()) {
+            article.delete();
+        }
+        try {
+            article.createNewFile();
+        } catch (IOException e) {
+            Log.e("ContentLoader","could not create cache file");
+            return;
+        }
+        try {
+            as.serialize(new DataOutputStream(new FileOutputStream(article)));
+        } catch (IOException e) {
+            Log.e("ContentLoader","could not write article to cache file");
+            if (article.exists())
+                article.delete();
+        }
+    }
+
+    private boolean isSerialized(Context context, String uuid) {
+        File cache = context.getCacheDir();
+        File article = new File(cache,uuid);
+        if (article.exists()) return true;
+        return false;
+    }
+
+    void removeCachedVersion(Context context, String uuid) {
+        File cache = context.getCacheDir();
+        File article = new File(cache,uuid);
+        if (article.exists()) article.delete();
+    }
+
+    public CharSequence loadSerialized(Context context, String uuid) throws IOException, SpannedSerializator.InvalidVersionException, SpannedSerializator.ReadError {
+        File cache = context.getCacheDir();
+        File article = new File(cache,uuid);
+        DataInputStream dis = new DataInputStream(new FileInputStream(article));
+        return ArticleSerializer.read(context,dis);
     }
 
     public class Article {
@@ -90,10 +167,29 @@ public class ContentLoader {
             }
         }
 
+
+        private void deserialize(Context context, ArticleView view) throws SpannedSerializator.InvalidVersionException, SpannedSerializator.ReadError, IOException {
+            Spanned content = (Spanned) loadSerialized(context,mUuid);
+            view.setLoadingState(false,100);
+            view.setContent(mTitle, mAuthor, mSource, content);
+            Log.v("CL.Article","content deserialized");
+        }
+
         public void load(final Context context, ArticleView view) throws Exception {
             final String content;
             final Html.ImageGetter imageGetter;
-
+            if (isSerialized(context,mUuid)) {
+                try {
+                    deserialize(context, view);
+                    return;
+                } catch (SpannedSerializator.InvalidVersionException e) {
+                    e.printStackTrace();
+                } catch (SpannedSerializator.ReadError readError) {
+                    readError.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             if (mAssets) {
                 content = FileUtils.convertStreamToString(context.getAssets().open("articles/"+mArticles.get(mUuid)));
                 imageGetter = new Html.ImageGetter() {
@@ -113,7 +209,7 @@ public class ContentLoader {
                             return null;
                         }
                         Bitmap bitmap = BitmapFactory.decodeStream(is);
-                        Drawable result = new BitmapDrawable(context.getResources(), bitmap);
+                        Drawable result = new TaggedBitmapDrawable(context.getResources(), bitmap, "articles/"+source);
                         result.setBounds(0, 0, result.getIntrinsicWidth(),
                                 result.getIntrinsicHeight());
                         return result;
@@ -160,7 +256,7 @@ public class ContentLoader {
                                 return null;
                             }
                             Bitmap bitmap = BitmapFactory.decodeStream(is);
-                            Drawable result = new BitmapDrawable(context.getResources(), bitmap);
+                            Drawable result = new TaggedBitmapDrawable(context.getResources(), bitmap,source);
                             result.setBounds(0, 0, result.getIntrinsicWidth(),
                                     result.getIntrinsicHeight());
                             return result;
@@ -178,8 +274,6 @@ public class ContentLoader {
                     content = "article not found";
                     imageGetter = null;
                 }
-
-
             }
 
             CharSequence text = Html.fromHtml(content,imageGetter,new HtmlTagHandler());

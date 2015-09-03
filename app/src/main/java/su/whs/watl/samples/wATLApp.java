@@ -2,6 +2,7 @@ package su.whs.watl.samples;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,64 @@ public class wATLApp extends Application {
             }
         }.execute();
 
+//        /** benchmark **/
+//        contentLoader.removeCachedVersion(getBaseContext(),ContentLoader.ARTICLE_SCIENCE1);
+//        long start = SystemClock.uptimeMillis();
+//        for(int i=0; i<100; i++) {
+//            ContentLoader.Article a = contentLoader.get(ContentLoader.ARTICLE_SCIENCE1);
+//            try {
+//                a.load(getApplicationContext(), new ArticleView() {
+//                    @Override
+//                    public void setLoadingState(boolean state, int percents) {
+//
+//                    }
+//
+//                    @Override
+//                    public void setContent(String title, String author, String source, CharSequence content) {
+//
+//                    }
+//                });
+//            } catch (Exception e) {
+//                Log.e("App", "benchmark failed");
+//                e.printStackTrace();
+//                return;
+//            }
+//        }
+//        long spent = SystemClock.uptimeMillis() - start;
+//        Log.e("APP:PERF", "100 loads: "+String.valueOf(spent)+" ms");
+//        start = SystemClock.uptimeMillis();
+        contentLoader.cacheArticleAsSerializedSpanned(getApplicationContext(), new Runnable() {
+            @Override
+            public void run() {
+                Log.d("wATLApp", "serialization finished");
+            }
+        });
+//        spent = SystemClock.uptimeMillis() - start;
+//        Log.e("APP:PERF", "caching time spent: " + String.valueOf(spent) + " ms");
+//        start = SystemClock.uptimeMillis();
+//        for(int i=0; i<100; i++) {
+//            ContentLoader.Article a = contentLoader.get(ContentLoader.ARTICLE_SCIENCE1);
+//            try {
+//                a.load(getApplicationContext(),new ArticleView() {
+//                    @Override
+//                    public void setLoadingState(boolean state, int percents) {
+//
+//                    }
+//
+//                    @Override
+//                    public void setContent(String title, String author, String source, CharSequence content) {
+//
+//                    }
+//                });
+//            } catch (Exception e) {
+//                // e.printStackTrace();
+//                Log.e("APP:PERF", "benchmark failed");
+//                e.printStackTrace();
+//                return;
+//            }
+//        }
+//        spent = SystemClock.uptimeMillis() - start;
+//        Log.e("APP:PERF", "100 deserialization time spent: "+String.valueOf(spent)+" ms");
     }
 
     List<StateListener> mStateListeners = new ArrayList<StateListener>();
