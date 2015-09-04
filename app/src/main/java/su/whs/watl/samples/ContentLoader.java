@@ -39,10 +39,11 @@ public class ContentLoader {
     public static final String ARTICLE_SCIENCE1 = "science1";
     public static final String ARTICLE_SCIENCE2 = "science2";
     public static final String GIF_ANIMATION = "gif_animation";
-
+    public static final String RTL_TEST = "rtl";
     private static Map<String,String> mArticles = new HashMap<String,String>();
     static {
         mArticles.put("lorem", null);
+        mArticles.put("rtl","rtl_test.html");
         mArticles.put("sheakspeare", null);
         mArticles.put("wesnoth", null);
         mArticles.put("gif_animation",null);
@@ -147,8 +148,12 @@ public class ContentLoader {
                     return "Android OpenGL ES Tutorial";
                 } else if (mUuid.equals("science1")) {
                     return "Sciene article 1";
-                } else {
+                } else if (mUuid.equals("science2")){
                     return "Science article 2";
+                } else if (mUuid.equals("rtl")) {
+                    return "RTL Test";
+                } else {
+                    return null;
                 }
             } else {
                 if (mUuid==null) {

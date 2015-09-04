@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -14,7 +15,15 @@
         <su.whs.watl.ui.TextViewEx
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:asyncReflow="false"
+            app:justificationEnabled="true"
+            app:selectionColor="@color/accent_material_light"
+            app:paragraphMarginTop="8dp"
+            app:paragraphMarginLeft="4dp"
+            app:urlHighlightColor="@color/abc_search_url_text"
+            app:minColumnWidth="12dp"
+            >
 
         </su.whs.watl.ui.TextViewEx>
     </ScrollView>

@@ -33,6 +33,7 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
         data.add(getRowData(4));
         data.add(getRowData(5));
         data.add(getRowData(6));
+        data.add(getRowData(7));
         SimpleAdapter adapter = new SimpleAdapter(this,data,R.layout.samples_list_item, new String[]  {
             "img", "title", "description"
         }, new int[] { R.id.imageView, R.id.itemTitle, R.id.itemSnippet }) {
@@ -84,6 +85,9 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
                         break;
                     case 6:
                         i.setClass(getBaseContext(), AnimationActivity.class);
+                        break;
+                    case 7:
+                        i.setClass(getBaseContext(), RTLTestActivity.class);
                         break;
                     default:
                         return;
@@ -146,6 +150,11 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
                 title = "Animation";
                 description = "gif in html sample";
                 img = R.drawable.ic_launcher;
+                break;
+            case 7:
+                title = "RTL Test";
+                description = "test Right-To-Left direction";
+                img = R.drawable.abc_tab_indicator_material;
                 break;
         }
         result.put("img",img);
