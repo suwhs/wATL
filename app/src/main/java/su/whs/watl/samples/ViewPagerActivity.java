@@ -123,7 +123,8 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
                     ));
 
         mAdapter.getOptions()
-                .setDrawableMinimumScaleFactor(0.6f);
+                .setDrawableMinimumScaleFactor(0.5f)
+                .setTextPaddings(5,5,5,5);
         mOptionsHandler = new TextOptionsHandler(this,mAdapter.getOptions());
         mPager.setAdapter(mAdapter);
         if (Build.VERSION.SDK_INT>10) {

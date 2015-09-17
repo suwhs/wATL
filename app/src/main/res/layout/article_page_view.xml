@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent">
     <!-- simple layout contains multicolumn textview -->
     <FrameLayout
@@ -7,7 +8,7 @@
         android:layout_height="36dp"
         android:id="@+id/counterFrame"
         android:alpha="0.7"
-        android:background="@android:color/background_light"
+        android:background="@android:color/background_dark"
         android:layout_alignParentBottom="true">
 
         <LinearLayout
@@ -50,5 +51,8 @@
         android:textIsSelectable="true"
         android:layout_alignParentTop="true"
         android:paddingBottom="1dp"
+        app:textPaddingTop="3dp"
+        app:textPaddingBottom="3dp"
+        app:columnSpacing="10dp"
         android:layout_above="@+id/counterFrame" />
 </RelativeLayout>

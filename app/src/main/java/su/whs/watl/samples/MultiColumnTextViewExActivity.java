@@ -55,7 +55,7 @@ public class MultiColumnTextViewExActivity extends ActionBarActivity {
                 return result;
             }
         }, new HtmlTagHandler());
-        tv.setColumnLimits(300, 600);
+        // tv.setColumnLimits(300, 600); // overrides attributes in xml
         tv.setText(text);
         tv.setTextIsSelectable(true);
         if (Build.VERSION.SDK_INT>10)

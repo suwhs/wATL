@@ -1,9 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent"
     tools:context="su.whs.watl.samples.MultiColumnTextViewExActivity">
 
     <ScrollView
@@ -14,6 +12,13 @@
     <su.whs.watl.ui.MultiColumnTextViewEx
         android:id="@+id/textView"
         android:text="@string/hello_world"
+        app:textPaddingLeft="5dp"
+        app:textPaddingRight="5dp"
+        app:textPaddingTop="5dp"
+        app:textPaddingBottom="5dp"
+        app:asyncReflow="false"
+        app:columnCount="3"
+        app:columnSpacing="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     </ScrollView>
