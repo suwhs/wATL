@@ -26,7 +26,7 @@ public class TextViewExScrollActivity extends ActionBarActivity implements Artic
         TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
         ((wATLApp)getApplication()).getArticle(articles[currentArticle],this);
         currentArticle++;
-        opts = new TextOptionsHandler(this,tv.getOptions());
+        opts = new TextOptionsHandler(this,tv);
     }
 
     @Override

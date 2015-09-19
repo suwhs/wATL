@@ -30,7 +30,7 @@ public class MultiColumnTextViewExActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multi_column_text_view_ex);
         MultiColumnTextViewEx tv = (MultiColumnTextViewEx) findViewById(R.id.textView);
-        opts = new TextOptionsHandler(this,tv.getOptions());
+        opts = new TextOptionsHandler(this,tv);
         CharSequence text = Html.fromHtml(SampleContent.get(), new Html.ImageGetter() {
             /**
              * load images from assets/ folder

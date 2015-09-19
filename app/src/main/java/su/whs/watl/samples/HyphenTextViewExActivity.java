@@ -38,7 +38,7 @@ public class HyphenTextViewExActivity extends ActionBarActivity implements Artic
                 // .setNewLineLeftMargin(20)
                 // .setNewLineTopMargin(8);
         ((wATLApp)getApplication()).getArticle(articles[currentArticle],this);
-        opts = new TextOptionsHandler(this,opt);
+        opts = new TextOptionsHandler(this,tv);
 
     }
 

@@ -7,19 +7,22 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import su.whs.watl.text.ContentView;
+import su.whs.watl.ui.ITextView;
 
 /**
  * Created by igor n. boulliev on 17.06.15.
  */
 public class TextOptionsHandler {
-    private ContentView.Options opts;
+    private ITextView textView;
     private Context ctx;
 
-    public TextOptionsHandler(Context context, ContentView.Options options) {
-        ctx = context; opts = options;
+    public TextOptionsHandler(Context context, ITextView tv) {
+        ctx = context;
+        textView = tv;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
+        ContentView.Options opts = textView.getOptions();
         int id = item.getItemId();
         if (id == R.id.bigfont) {
             setFontSize(android.R.style.TextAppearance_Large,item);
@@ -63,7 +66,7 @@ public class TextOptionsHandler {
 
     public void restoreState(Menu menu) {
         MenuItem item;
-
+        ContentView.Options opts = textView.getOptions();
         item = menu.findItem(R.id.filter_empty);
         if (item!=null) {
             item.setChecked(opts.isFilterEmptyLines());
@@ -82,6 +85,7 @@ public class TextOptionsHandler {
         Button b =new Button(ctx);
         b.setTextAppearance(ctx,appearance);
         float size = b.getTextSize();
+        ContentView.Options opts = textView.getOptions();
         opts
                 .setTextSize(size)
                 .apply();

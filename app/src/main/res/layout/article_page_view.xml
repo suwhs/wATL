@@ -8,7 +8,7 @@
         android:layout_height="36dp"
         android:id="@+id/counterFrame"
         android:alpha="0.7"
-        android:background="@android:color/background_dark"
+        android:background="@android:color/background_light"
         android:layout_alignParentBottom="true">
 
         <LinearLayout
@@ -21,6 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="0"
                 android:id="@+id/pageNo" />
@@ -29,6 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/black"
                 android:text="of"
                 android:id="@+id/textView2"
                 android:paddingLeft="8dp"
@@ -40,6 +42,7 @@
                 android:paddingRight="8dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="0"
+                android:textColor="@android:color/black"
                 android:id="@+id/pagesTotal"/>
         </LinearLayout>
     </FrameLayout>

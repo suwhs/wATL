@@ -5,6 +5,7 @@ package su.whs.watl.samples;
  */
 
 
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
@@ -31,7 +32,7 @@ public class AnimationActivity extends ActionBarActivity implements ArticleView 
 
         TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
         ((wATLApp)getApplication()).getArticle("gif_animation",this);
-        opts = new TextOptionsHandler(this,tv.getOptions());
+        opts = new TextOptionsHandler(this,tv);
         tv.getOptions()
                 .setDrawableMinimumScaleFactor(1.0f)
                 .setDrawablePaddings(10,10,10,10)
@@ -39,7 +40,7 @@ public class AnimationActivity extends ActionBarActivity implements ArticleView 
                 .setImagePlacementHandler(new ImagePlacementHandler.DefaultImagePlacementHandler());
         tv.setDynamicDrawableInteractionListener(new DynamicDrawableInteractionListener() {
             @Override
-            public void onClicked(DynamicDrawableSpan span, RectF bounds, View view) {
+            public void onClicked(DynamicDrawableSpan span, Rect bounds, View view) {
                 Drawable drawable = span.getDrawable();
                 if (drawable instanceof Animatable) {
                     if (!((Animatable)drawable).isRunning())

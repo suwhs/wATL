@@ -25,7 +25,7 @@ public class RTLTestActivity extends ActionBarActivity implements ArticleView {
 
         TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
         ((wATLApp)getApplication()).getArticle(ContentLoader.RTL_TEST,this);
-        opts = new TextOptionsHandler(this,tv.getOptions());
+        opts = new TextOptionsHandler(this,tv);
     }
 
     @Override
