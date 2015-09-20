@@ -98,7 +98,7 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
                     .from(ViewPagerActivity.this)
                     .inflate(R.layout.article_page_view, null, false);
             MultiColumnTextViewEx tve = (MultiColumnTextViewEx) layout.findViewById(R.id.contentTextView);
-            layout.setBackgroundColor(android.R.color.white); // set background for buggy android versions
+            // layout.setBackgroundColor(getResources().getColor(android.R.color.black)); // set background for buggy android versions
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
                 tve.setColumnsCount(2);
             return layout;
@@ -258,6 +258,7 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
                 mAdapter.getOptions()
                         // .setImagePlacementHandler(new ImagePlacementHandler.DefaultImagePlacementHandler())
                         .setLineBreaker(HyphenLineBreaker.getInstance(pat));
+                mAdapter.getTextPaint().setColor(getResources().getColor(android.R.color.white));
                 mAdapter.setText(result);
                 mPager.setOnPageChangeListener(ViewPagerActivity.this);
             }
