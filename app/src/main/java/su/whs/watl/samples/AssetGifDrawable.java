@@ -91,6 +91,11 @@ public class AssetGifDrawable extends LazyDrawable {
 
     @Override
     protected Drawable readFullDrawable() {
+        try { // sleep added to display loading animation
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            // e.printStackTrace();
+        }
         if (mLoadingError) return null;
         if (mFullVersionLoaded) return null;
         try {
@@ -107,7 +112,9 @@ public class AssetGifDrawable extends LazyDrawable {
     /* call loadFullImage and launch animation */
     @Override
     public void start() {
-        loadFullImage();
+        if (!mFullVersionLoaded) {
+            loadFullImage();
+        }
         super.start();
     }
 

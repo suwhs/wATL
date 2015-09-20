@@ -272,7 +272,12 @@ public class ContentLoader {
                     imageGetter = new Html.ImageGetter() {
                         @Override
                         public Drawable getDrawable(String source) {
-                            return new AssetGifDrawable(context,source);
+                            AssetGifDrawable dr = new AssetGifDrawable(context,source);
+                            Drawable rr = context.getResources().getDrawable(
+                                    su.whs.watl.R.mipmap.ic_play_circle_btn
+                            );
+                            dr.setPlayButtonDrawable(rr);
+                            return dr;
                         }
                     };
                 } else {

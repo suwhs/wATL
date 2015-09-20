@@ -97,7 +97,12 @@ public class ArticleSerializer extends SpannedSerializator {
                 result = new ImageSpan(mContext, BitmapFactory.decodeStream(is));
             } else if (type == 22) {
                 String tag = dis.readUTF();
-                result = new ImageSpan(new AssetGifDrawable(mContext, tag), tag);
+                AssetGifDrawable dr = new AssetGifDrawable(mContext, tag);
+                Drawable rr = mContext.getResources().getDrawable(
+                        su.whs.watl.R.mipmap.ic_play_circle_btn
+                );
+                dr.setPlayButtonDrawable(rr);
+                result = new ImageSpan(dr, tag);
             } else if (type == 23) {
                 result = super.readDynamicDrawableSpan(dis);
             } else {
