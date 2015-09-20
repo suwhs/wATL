@@ -86,7 +86,7 @@ public class ArticleSerializer extends SpannedSerializator {
     }
 
     @Override
-    public DynamicDrawableSpan readDynamicDrawableSpan(DataInputStream dis) {
+    public DynamicDrawableSpan readDynamicDrawableSpan(DataInputStream dis) throws ReadError {
         DynamicDrawableSpan result;
         int type = -1;
         try {
@@ -102,7 +102,7 @@ public class ArticleSerializer extends SpannedSerializator {
                 result = super.readDynamicDrawableSpan(dis);
             } else {
                 result = null;
-                throw new IllegalStateException("unknown type while readDynamicDrawableSpan:" + type);
+                throw new ReadError("unknown type while readDynamicDrawableSpan:" + type);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -115,7 +115,7 @@ public class ArticleSerializer extends SpannedSerializator {
             Log.e("AS", "error reading sync mark");
         }
         if (syncMark!=0xaaaa) {
-            throw new IllegalStateException("lost sync after read drawable with tag:"+type);
+            throw new ReadError("lost sync after read drawable with tag:"+type);
         }
         return result;
     }
