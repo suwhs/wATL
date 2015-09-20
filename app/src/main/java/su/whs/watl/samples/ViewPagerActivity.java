@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -42,7 +43,7 @@ import su.whs.watl.text.hyphen.PatternsLoader;
 import su.whs.watl.ui.MultiColumnTextViewEx;
 
 public class ViewPagerActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener {
-
+    private boolean mFullscreenMode = true;
     private ViewPager mPager;
     private SparseArray<String> mArticles;
     private Map<String,String> mTitles = new HashMap<String,String>();
@@ -111,6 +112,12 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (mFullscreenMode) {
+            // getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            getSupportActionBar().hide();
+        }
         setContentView(R.layout.activity_articles_flow);
         mPager = (ViewPager) findViewById(R.id.viewPager);
         mPager.setPageMargin(2);
