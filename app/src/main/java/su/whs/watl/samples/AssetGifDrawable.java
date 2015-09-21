@@ -92,7 +92,7 @@ public class AssetGifDrawable extends LazyDrawable {
     @Override
     protected Drawable readFullDrawable() {
         try { // sleep added to display loading animation
-            Thread.sleep(3000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             // e.printStackTrace();
         }

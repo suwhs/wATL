@@ -144,17 +144,17 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
             case 5:
                 title = "Articles";
                 description = "Paged View Demo";
-                img = R.mipmap.ic_logo;
+                img = R.mipmap.ic_article;
                 break;
             case 6:
                 title = "Animation";
                 description = "gif in html sample";
-                img = R.drawable.ic_launcher;
+                img = R.mipmap.ic_play_button;
                 break;
             case 7:
                 title = "RTL Test";
                 description = "test Right-To-Left direction";
-                img = R.drawable.abc_tab_indicator_material;
+                img = R.mipmap.ic_real;
                 break;
         }
         result.put("img",img);

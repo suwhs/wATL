@@ -265,7 +265,7 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
                 mAdapter.getOptions()
                         // .setImagePlacementHandler(new ImagePlacementHandler.DefaultImagePlacementHandler())
                         .setLineBreaker(HyphenLineBreaker.getInstance(pat));
-                mAdapter.getTextPaint().setColor(getResources().getColor(android.R.color.white));
+                // mAdapter.getTextPaint().setColor(getResources().getColor(android.R.color.white));
                 mAdapter.setText(result);
                 mPager.setOnPageChangeListener(ViewPagerActivity.this);
             }
