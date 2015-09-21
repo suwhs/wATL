@@ -43,7 +43,7 @@ import su.whs.watl.text.hyphen.PatternsLoader;
 import su.whs.watl.ui.MultiColumnTextViewEx;
 
 public class ViewPagerActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener {
-    private boolean mFullscreenMode = true;
+    private boolean mFullscreenMode = false;
     private ViewPager mPager;
     private SparseArray<String> mArticles;
     private Map<String,String> mTitles = new HashMap<String,String>();

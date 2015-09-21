@@ -16,7 +16,7 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:asyncReflow="false"
+            app:asyncReflow="true"
             app:justificationEnabled="true"
             app:selectionColor="@color/accent_material_light"
             app:paragraphMarginTop="8dp"

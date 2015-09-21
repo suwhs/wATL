@@ -17,6 +17,7 @@ import su.whs.watl.text.hyphen.PatternsLoader;
  */
 public class wATLApp extends Application {
     private boolean hyphenatorReady = false;
+    public static boolean serializationEnabled = false;
     private ContentLoader contentLoader = new ContentLoader();
 
     public interface StateListener {
@@ -80,12 +81,14 @@ public class wATLApp extends Application {
 //        long spent = SystemClock.uptimeMillis() - start;
 //        Log.e("APP:PERF", "100 loads: "+String.valueOf(spent)+" ms");
 //        start = SystemClock.uptimeMillis();
-        contentLoader.cacheArticleAsSerializedSpanned(getApplicationContext(), new Runnable() {
-            @Override
-            public void run() {
-                Log.d("wATLApp", "serialization finished");
-            }
-        });
+        if (serializationEnabled) {
+            contentLoader.cacheArticleAsSerializedSpanned(getApplicationContext(), new Runnable() {
+                @Override
+                public void run() {
+                    Log.d("wATLApp", "serialization finished");
+                }
+            });
+        }
 //        spent = SystemClock.uptimeMillis() - start;
 //        Log.e("APP:PERF", "caching time spent: " + String.valueOf(spent) + " ms");
 //        start = SystemClock.uptimeMillis();

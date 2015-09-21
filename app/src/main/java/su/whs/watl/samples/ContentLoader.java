@@ -183,7 +183,7 @@ public class ContentLoader {
         public void load(final Context context, ArticleView view) throws Exception {
             final String content;
             final Html.ImageGetter imageGetter;
-            if (isSerialized(context,mUuid)) {
+            if (wATLApp.serializationEnabled && isSerialized(context,mUuid)) {
                 try {
                     deserialize(context, view);
                     return;

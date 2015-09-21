@@ -100,7 +100,7 @@ public class AssetGifDrawable extends LazyDrawable {
         if (mFullVersionLoaded) return null;
         try {
             /* GifDrawable implements Animatable, so we can show animations */
-             Drawable r = Build.VERSION.SDK_INT>18 ? new GifDrawable(mContext.getAssets().open(mPath)) : new GifDrawableCompat(mContext.getAssets().open(mPath));
+             Drawable r = Build.VERSION.SDK_INT > 18 ? new GifDrawable(mContext.getAssets().open(mPath)) : new GifDrawableCompat(mContext.getAssets().open(mPath));
             mFullVersionLoaded = true;
             return r;
         } catch (IOException e) {

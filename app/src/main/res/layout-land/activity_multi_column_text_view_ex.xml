@@ -17,7 +17,7 @@
         app:textPaddingTop="5dp"
         app:textPaddingBottom="5dp"
         app:asyncReflow="false"
-        app:columnCount="2"
+        app:columnCount="3"
         app:columnSpacing="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
