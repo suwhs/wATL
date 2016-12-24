@@ -26,7 +26,7 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
         ListView lv = (ListView) findViewById(R.id.listView);
         ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
         final ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar);
-        data.add(getRowData(0));
+//        data.add(getRowData(0));
         data.add(getRowData(1));
         data.add(getRowData(2));
         data.add(getRowData(3));
@@ -45,7 +45,7 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent();
-                switch(position) {
+                switch(position+1) {
                     case 0:
                         i.setClass(getBaseContext(), TextViewWSActivity.class);
                         break;

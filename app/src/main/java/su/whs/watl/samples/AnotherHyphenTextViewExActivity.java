@@ -30,14 +30,17 @@ import su.whs.watl.ui.TextViewEx;
  */
 public class AnotherHyphenTextViewExActivity extends ActionBarActivity {
 
+    private TextOptionsHandler opts;
+    private CharSequence text;
+    private TextViewEx tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hyphen_text_view_ex);
-        TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
+        tv = (TextViewEx) findViewById(R.id.textView);
 
-        CharSequence text = Html.fromHtml(SampleContent.wesnoth(), new Html.ImageGetter() {
+        text = Html.fromHtml(SampleContent.wesnoth(), new Html.ImageGetter() {
             /**
              * load images from assets/ folder
              * @param source - usually value for 'src' attribute of <img> tag
@@ -72,13 +75,18 @@ public class AnotherHyphenTextViewExActivity extends ActionBarActivity {
         tv.getOptions()
                 .setLineSpacingMultiplier(0.5f)
                 .setLineSpacingAdd(-4)
-                .setNewLineLeftMargin(25);
+                .setNewLineLeftMargin(25)
+                .setTextPaddings(5,4,5,4);
+
+        opts = new TextOptionsHandler(this,tv);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_hyphen_text_view_ex, menu);
+//        getMenuInflater().inflate(R.menu.menu_hyphen_text_view_ex, menu);
+        getMenuInflater().inflate(R.menu.menu_text_view_ex_scroll, menu);
+        opts.restoreState(menu);
         return true;
     }
 
@@ -88,12 +96,30 @@ public class AnotherHyphenTextViewExActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        if (opts.onOptionsItemSelected(item))
+            return true;
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        } else if (id == R.id.test_set_text) {
+            tv.setText(text);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle out) {
+        super.onSaveInstanceState(out);
+        out.putBundle("OPTIONS", tv.getOptions().getState());
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle in) {
+        super.onRestoreInstanceState(in);
+        if (in.containsKey("OPTIONS")) {
+            tv.getOptions().set(in.getBundle("OPTIONS"));
+        }
     }
 }

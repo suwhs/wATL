@@ -43,7 +43,7 @@ public class ContentLoader {
     private static Map<String,String> mArticles = new HashMap<String,String>();
     static {
         mArticles.put("lorem", null);
-        mArticles.put("rtl","rtl_test.html");
+        mArticles.put("rtl","rtl_test_2.html");
         mArticles.put("sheakspeare", null);
         mArticles.put("wesnoth", null);
         mArticles.put("gif_animation",null);
@@ -276,7 +276,9 @@ public class ContentLoader {
                             Drawable rr = context.getResources().getDrawable(
                                     su.whs.watl.R.mipmap.ic_play_circle_btn
                             );
+
                             dr.setPlayButtonDrawable(rr);
+                            dr.setLoadingDrawable(rr);
                             return dr;
                         }
                     };

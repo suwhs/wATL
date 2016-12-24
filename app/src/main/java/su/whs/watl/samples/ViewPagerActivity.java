@@ -1,6 +1,7 @@
 package su.whs.watl.samples;
 
-import android.annotation.TargetApi;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
@@ -15,16 +16,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.view.ActionMode;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.util.SparseArray;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,6 +42,7 @@ import su.whs.watl.text.HyphenLineBreaker;
 import su.whs.watl.text.ITextPagesNumber;
 import su.whs.watl.text.hyphen.HyphenPattern;
 import su.whs.watl.text.hyphen.PatternsLoader;
+import su.whs.watl.ui.ITextView;
 import su.whs.watl.ui.MultiColumnTextViewEx;
 
 public class ViewPagerActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener {
@@ -135,7 +138,7 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
         mOptionsHandler = new TextOptionsHandler(this,mAdapter);
         mPager.setAdapter(mAdapter);
         if (Build.VERSION.SDK_INT>10) {
-            mAdapter.setCustomSelectionActionModeCallback(new PageActionModeCallback());
+            mAdapter.setCustomSelectionActionModeCallback(new PageActionModeCallback(mAdapter));
         }
         loadArticles();
     }
@@ -277,18 +280,19 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
         }.execute();
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private class PageActionModeCallback implements ActionMode.Callback {
-
+    private class PageActionModeCallback implements android.support.v7.view.ActionMode.Callback {
+        private ITextView mTextView;
+        private PageActionModeCallback(ITextView textView) {
+            mTextView = textView;
+        }
         @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            // menu.add(0, DEFINITION, 0, "Definition").setIcon(R.drawable.ic_action_book);
+        public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
             menu.add(0, android.R.id.copy, 0, "copy").setIcon(R.drawable.ic_action_name);
             return true;
         }
 
         @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
             // Remove the "select all" option
             menu.removeItem(android.R.id.selectAll);
             // Remove the "cut" option
@@ -302,13 +306,19 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case android.R.id.copy:
-                    /*
                     CharSequence text = mTextView.getText().subSequence(mTextView.getSelectionStart(), mTextView.getSelectionEnd());
-                    ClipboardManager manager = (ClipboardManager) mTextView.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                    manager.setPrimaryClip(ClipData.newPlainText(null, text));
-                    mTextView.setSelected(false);
-                    Toast.makeText(mTextView.getContext(), "Text copied to clipboard", Toast.LENGTH_LONG).show();
-                    mode.finish(); */
+                    if (mTextView instanceof View && Build.VERSION.SDK_INT>=11) {
+                        Context context = ((View)mTextView).getContext();
+                        ClipboardManager manager = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                            manager.setPrimaryClip(ClipData.newPlainText(null, text));
+                        } else {
+
+                        }
+                        mTextView.setSelected(false);
+                        Toast.makeText(context, "Text copied to clipboard", Toast.LENGTH_LONG).show();
+                    }
+                    mode.finish();
                     return true;
                 default:
                     break;
@@ -317,7 +327,7 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
         }
 
         @Override
-        public void onDestroyActionMode(ActionMode mode) {
+        public void onDestroyActionMode(android.support.v7.view.ActionMode mode) {
 
         }
     }

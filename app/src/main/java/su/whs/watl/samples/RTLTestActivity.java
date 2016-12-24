@@ -3,8 +3,15 @@ package su.whs.watl.samples;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.text.Bidi;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import su.whs.watl.ui.TextViewEx;
 
@@ -79,9 +86,24 @@ public class RTLTestActivity extends ActionBarActivity implements ArticleView {
     @Override
     public void setContent(String title, String author, String source, CharSequence content) {
         TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
-        tv.setText(content);
+        tv.setText(workaround(content)); //
         tv.setTextIsSelectable(true);
         if (Build.VERSION.SDK_INT>10)
             tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
+    }
+
+    public Spanned workaround(CharSequence string) {
+        SpannableStringBuilder ssb = new SpannableStringBuilder(string);
+        Bidi bidi = new Bidi(string.toString(), Bidi.DIRECTION_DEFAULT_LEFT_TO_RIGHT);
+        List<Integer> inserts = new ArrayList<Integer>();
+        if (bidi.isMixed()) {
+            for (int run = 0; run < bidi.getRunCount(); run++) {
+                int end = bidi.getRunLimit(run);
+                inserts.add(end);
+            }
+            Collections.reverse(inserts);
+            for (int pos : inserts) ssb.insert(pos,"\n");
+        }
+        return ssb;
     }
 }
