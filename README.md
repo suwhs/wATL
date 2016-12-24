@@ -5,7 +5,7 @@ NB: library itself hosted now in separate repository - <a href="https://github.c
 
 License
 ========= 
-GPL v3 (<a href="https://www.bountysource.com/teams/whssu/fundraiser">You may support opensource project on bountysource.com</a>)
+GPL v3 
 
 Description
 ======
@@ -33,40 +33,9 @@ wATLlib published on jcenter repository, so just
 
 add to dependencies :
 ```gradle
-compile 'su.whs:wATLlib:+'
+compile 'su.whs:wATLlib:1.2.1'
 ```
 
-more detailed <a href="http://whs.su/products/watl-widgets-library-for-android/watl-library-quickstart-guide/">quick start guide</a>
-
-(also, see <a href="http://whs.su">commercial licenses for proprietary apps on whs.su</a>)
-
-News
-======
-
-UPDATE 02 Jul 15
- fix Demo App crash on old version of Android (2.3.3)
- BaseTextPagerAdapter now can be attached to ViewPager before setText() call
-
-UPDATE 01 Jul 15
- extract wATL library to git submodule - standalone library hosted at <a href="https://github.com/suwhs/wATLlib">github.com/suwhs/wATLlib</a>
- now wATL library contains adapter for ViewPager - to show paginated text
-
-UPDATE 06 Apr 15
- added MultiColumnTextViewEx example - widget, that supports automatic columns count calculating depends on screen resolution. limits sets via setColumnLimits(minColumnWidth,maxColumnWidth) or forcing columns count via setColumnsCount(int numOfColumns)
-
-UPDATE 05 Apr 15
- added <a href="https://appetize.io/app/3tcue9p594yzm7z1dap0md41tc">online app demo (via appetize.io)</a>
-
-UPDATE 04 Apr 15
- hyphenation rules loading optimization
- added icons and 'about' activity
- added image wrap demo activity
-
-UPDATE 03 Apr 15
- added *Soft-Hyphenation LineBreaker*  to sample application - so, TextViewEx render justified text using HyphenLineBreaker.class
-    HyphenLineBreaker takes time to initialize (it's adapted third-party code), but initialization required once per launch, and
-    may be optimized. (Indeed it's just demo of wATL feature *customizable LineBreaker*)
-    screenshots: <a href="https://github.com/suwhs/wATL/blob/master/screenshots/HyphenTextViewEx3.png">screenshot 3</a>,    <a href="https://github.com/suwhs/wATL/blob/master/screenshots/HyphenTextViewEx2.png">screenshot 4</a>
 
 Published Classes
 ========
