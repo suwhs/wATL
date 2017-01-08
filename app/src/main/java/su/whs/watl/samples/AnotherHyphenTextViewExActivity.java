@@ -39,7 +39,9 @@ public class AnotherHyphenTextViewExActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hyphen_text_view_ex);
         tv = (TextViewEx) findViewById(R.id.textView);
-
+        /**
+         * use stock Html.fromHtml with custom tag handler and image loader (loads images from assets folder)
+         * **/
         text = Html.fromHtml(SampleContent.wesnoth(), new Html.ImageGetter() {
             /**
              * load images from assets/ folder
@@ -69,13 +71,19 @@ public class AnotherHyphenTextViewExActivity extends ActionBarActivity {
         tv.setTextIsSelectable(true);
         if (Build.VERSION.SDK_INT>10)
             tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
+        /** load patterns for english language **/
         HyphenPattern pat = PatternsLoader.getInstance(this).getHyphenPatternAssets("en_us.hyphen.dat");
+        /** create HyphenLineBreaker with preloaded patterns and assign it to TextViewEx **/
         tv.getOptions().setLineBreaker(HyphenLineBreaker.getInstance(pat));
         /* screenshoting */
         tv.getOptions()
+                /** configure line spacing multiplier **/
                 .setLineSpacingMultiplier(0.5f)
+                /** reduce line spacing by 4px **/
                 .setLineSpacingAdd(-4)
+                /** set paragraph first line margin to left **/
                 .setNewLineLeftMargin(25)
+                /** configure text paddings **/
                 .setTextPaddings(5,4,5,4);
 
         opts = new TextOptionsHandler(this,tv);

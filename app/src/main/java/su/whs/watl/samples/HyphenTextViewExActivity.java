@@ -34,7 +34,8 @@ public class HyphenTextViewExActivity extends ActionBarActivity implements Artic
         HyphenPattern pat = PatternsLoader.getInstance(this).getHyphenPatternAssets("en_us.hyphen.dat");
         ContentView.Options opt = tv.getOptions();
         // tv.getOptions()
-               opt.setLineBreaker(HyphenLineBreaker.getInstance(pat));
+               opt.setLineBreaker(HyphenLineBreaker.getInstance(pat))
+                       .setFilterEmptyLines(true);
                 // .setNewLineLeftMargin(20)
                 // .setNewLineTopMargin(8);
         ((wATLApp)getApplication()).getArticle(articles[currentArticle],this);

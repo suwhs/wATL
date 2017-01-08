@@ -35,6 +35,7 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
         data.add(getRowData(6));
         data.add(getRowData(7));
         data.add(getRowData(8));
+        data.add(getRowData(9));
         SimpleAdapter adapter = new SimpleAdapter(this,data,R.layout.samples_list_item, new String[]  {
             "img", "title", "description"
         }, new int[] { R.id.imageView, R.id.itemTitle, R.id.itemSnippet }) {
@@ -91,6 +92,9 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
                         i.setClass(getBaseContext(), RTLTestActivity.class);
                         break;
                     case 8:
+                        i.setClass(getBaseContext(), RecyclerViewActivity.class);
+                        break;
+                    case 9:
                         i.setClass(getBaseContext(), AboutActivity.class);
                         break;
                     default:
@@ -161,6 +165,11 @@ public class MainActivity extends ActionBarActivity implements wATLApp.StateList
                 img = R.mipmap.ic_real;
                 break;
             case 8:
+                title = "Large List";
+                description = "test listview with thousand of items";
+                img = R.mipmap.ic_select_text;
+                break;
+            case 9:
                 title = "About";
                 description = "";
                 img = R.mipmap.ic_logo;

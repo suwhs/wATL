@@ -1,1 +1,1 @@
-include ':whsutils', ':app', ':wlazydrawable-parent', ':wATLlib', ':wlazydrawable'
+include ':whsutils', ':app', ':wlazydrawable-parent', ':wATLlib', ':wlazydrawable', ':mediaview'

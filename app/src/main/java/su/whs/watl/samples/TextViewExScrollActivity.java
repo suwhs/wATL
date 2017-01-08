@@ -10,7 +10,9 @@ import su.whs.watl.ui.TextViewEx;
 
 
 public class TextViewExScrollActivity extends ActionBarActivity implements ArticleView {
+    /** helper for option menu bindings to TextViewEx options **/
     private TextOptionsHandler opts;
+    /** articles variants **/
     private static final String[] articles = new String[] {
             ContentLoader.ARTICLE_SCIENCE1,
             ContentLoader.ARTICLE_SCIENCE2,
@@ -21,12 +23,20 @@ public class TextViewExScrollActivity extends ActionBarActivity implements Artic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /** activity layout **/
         setContentView(R.layout.activity_text_view_ex_scroll);
-
+        /** find TextViewEx **/
         TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
+        /**
+         * use article loader to assign content to TextViewEx
+         * see setContent() method for this activity
+         * **/
         ((wATLApp)getApplication()).getArticle(articles[currentArticle],this);
         currentArticle++;
+        /** initialize option menu bindings **/
         opts = new TextOptionsHandler(this,tv);
+        /** turn on empty lines elimination **/
+        tv.getOptions().setFilterEmptyLines(true);
     }
 
     @Override
@@ -77,12 +87,22 @@ public class TextViewExScrollActivity extends ActionBarActivity implements Artic
 
     }
 
+    /**
+     * called when Article content ready
+     * @param title - title of article
+     * @param author - author
+     * @param source - source url
+     * @param content - content
+     */
+
     @Override
     public void setContent(String title, String author, String source, CharSequence content) {
         TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
+        /** setText() with given content **/
         tv.setText(content);
+        /** enable selection **/
         tv.setTextIsSelectable(true);
-        if (Build.VERSION.SDK_INT>10)
+        if (Build.VERSION.SDK_INT>10) // if android version > 3.0 - turn on action mode
             tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
     }
 }

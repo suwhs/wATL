@@ -55,6 +55,7 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
         mTitles.put("science1a.html","How to rewire the eye");
         mTitles.put("science2a.html","These birds provide their own drum beat");
     }
+    /** show current page/total pages counters **/
     private class IndicatorHolder {
         TextView number;
         TextView total;
@@ -89,12 +90,20 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
         }
     };
 
+    /** implements adapter with getViewForPage()
+     * **/
     private class ArticlesPagesAdapter extends BaseTextPagerAdapter {
 
         public ArticlesPagesAdapter() {
             super(R.id.contentTextView, mPagesIndicator);
         }
 
+        /**
+         * basic example - just create instance of MultiColumnTextViewEx with 1 column in portrait mode and 2 columns in landscape mode
+         *
+         * @param position
+         * @return
+         */
         @Override
         public View getViewForPage(int position) {
             /* just inflate layout contains textviewex-derived view with id=@android:id/content */
@@ -131,9 +140,13 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
                     new ReaderViewPagerTransformer(
                             ReaderViewPagerTransformer.TransformType.SLIDE_OVER
                     ));
-
+        /** BaseTextPagerAdapter implements ITextView, so we can configure it with getOptions() **/
         mAdapter.getOptions()
+                /* minimum scale factor for drawable to allow wrapping */
                 .setDrawableMinimumScaleFactor(0.6f)
+                /* eliminate empty lines */
+                .setFilterEmptyLines(true)
+                /* set paddings for text content */
                 .setTextPaddings(5,5,5,5);
         mOptionsHandler = new TextOptionsHandler(this,mAdapter);
         mPager.setAdapter(mAdapter);

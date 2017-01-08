@@ -61,7 +61,7 @@ public class MultiColumnTextViewExActivity extends ActionBarActivity {
         if (Build.VERSION.SDK_INT>10)
             tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
         HyphenPattern pat = PatternsLoader.getInstance(this).getHyphenPatternAssets("en_us.hyphen.dat");
-        tv.getOptions().setLineBreaker(HyphenLineBreaker.getInstance(pat));
+        tv.getOptions().setLineBreaker(HyphenLineBreaker.getInstance(pat)).setFilterEmptyLines(true);
     }
 
     @Override

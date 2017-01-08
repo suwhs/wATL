@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:padding="4dp"
+                android:paddingTop="0dp"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="2dp"
+        android:layout_height="100dp"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/image"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="4dp"
+        android:maxLines="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <su.whs.watl.ui.TextViewEx
+        android:id="@+id/snippet"
+        android:layout_below="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/image"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="4dp"
+        app:filterEmptyLines="true"
+        app:asyncReflow="false"
+        android:maxLines="12"/>
+    <View android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="2dp"
+          android:layout_marginLeft="4dp"
+          android:layout_marginRight="4dp"
+          android:layout_alignParentBottom="true"
+          android:background="#d3d3d3"/>
+</RelativeLayout>

@@ -36,6 +36,7 @@ public class wATLApp extends Application {
 
             @Override
             protected Void doInBackground(Void... params) {
+                /** loading patterns from assets **/
                 HyphenPattern pat = PatternsLoader
                         .getInstance(getBaseContext())
                         .getHyphenPatternAssets("en_us.hyphen.dat");
@@ -145,6 +146,12 @@ public class wATLApp extends Application {
 
     public void getArticle(final String uuid, final ArticleView view) {
         new AsyncTask<Void,Void,ContentLoader.Article>() {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+            }
 
             @Override
             protected ContentLoader.Article doInBackground(Void... params) {
