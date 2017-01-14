@@ -1,0 +1,78 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+def siteUrl = 'http://whs.su'                          // Homepage URL of the library
+def gitUrl = 'https://github.com/suwhs/wATL.git'   // Git repository URL
+                                        // Maven Group ID for the artifact
+version='1.3'
+group='su.whs'
+
+install {
+    repositories.mavenInstaller {
+//         repository(url: "file://${System.properties['user.home']}/AndroidStudioProjects/maven-repository")
+    pom.project {
+            packaging 'aar'
+            groupId 'su.whs'
+            artifactId 'syllabification'
+            version '1.3'
+            name 'syllabification'
+            url siteUrl
+            inceptionYear '2016'
+            licenses {
+		license {
+                    name 'Apache License 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0'
+                    distribution 'repo'
+                }
+
+            }
+            scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+            }
+        }
+    }
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives','javadocDeps']
+    pkg {
+        repo = "maven"
+        name = "syllabification"
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
+}
+
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    failOnError false
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+    // options.encoding = 'UTF-8'
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+

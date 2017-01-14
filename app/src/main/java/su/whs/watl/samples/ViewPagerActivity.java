@@ -35,13 +35,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import su.whs.hyphens.HyphenLineBreaker;
 import su.whs.utils.FileUtils;
 import su.whs.watl.text.BaseTextPagerAdapter;
 import su.whs.watl.text.HtmlTagHandler;
-import su.whs.watl.text.HyphenLineBreaker;
 import su.whs.watl.text.ITextPagesNumber;
-import su.whs.watl.text.hyphen.HyphenPattern;
-import su.whs.watl.text.hyphen.PatternsLoader;
 import su.whs.watl.ui.ITextView;
 import su.whs.watl.ui.MultiColumnTextViewEx;
 
@@ -277,10 +275,9 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
             @Override
             protected void onPostExecute(CharSequence result) {
                 ViewPagerActivity.this.mArticles = mArticles;
-                HyphenPattern pat = PatternsLoader.getInstance(getBaseContext()).getHyphenPatternAssets("en_us.hyphen.dat");
                 mAdapter.getOptions()
                         // .setImagePlacementHandler(new ImagePlacementHandler.DefaultImagePlacementHandler())
-                        .setLineBreaker(HyphenLineBreaker.getInstance(pat));
+                        .setLineBreaker(HyphenLineBreaker.getInstance(ViewPagerActivity.this,"en_us"));
                 // mAdapter.getTextPaint().setColor(getResources().getColor(android.R.color.white));
                 mAdapter.setText(result);
                 mPager.setOnPageChangeListener(ViewPagerActivity.this);

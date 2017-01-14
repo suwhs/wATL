@@ -7,10 +7,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import su.whs.watl.text.HyphenLineBreaker;
-import su.whs.watl.text.LineBreaker;
-import su.whs.watl.text.hyphen.HyphenPattern;
-import su.whs.watl.text.hyphen.PatternsLoader;
+import su.whs.hyphens.HyphenLineBreaker;
+
 
 /**
  * Created by igor n. boulliev on 03.04.15.
@@ -37,14 +35,8 @@ public class wATLApp extends Application {
             @Override
             protected Void doInBackground(Void... params) {
                 /** loading patterns from assets **/
-                HyphenPattern pat = PatternsLoader
-                        .getInstance(getBaseContext())
-                        .getHyphenPatternAssets("en_us.hyphen.dat");
-                if (pat!=null) {
-                    LineBreaker hlb = HyphenLineBreaker.getInstance(pat);
-                    hyphenatorReady = true;
-                }
-
+                HyphenLineBreaker.require(getApplicationContext(),"en_us");
+                hyphenatorReady = true;
                 return null;
             }
 

@@ -1,1 +1,11 @@
+build/
+local.properties
+*.iml
 .idea
+deploy.gradle
+captures/
+screenshots/
+gradlew
+gradle/
+.gradle/
+

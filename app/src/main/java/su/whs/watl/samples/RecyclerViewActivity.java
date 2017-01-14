@@ -1,5 +1,6 @@
 package su.whs.watl.samples;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -20,10 +21,8 @@ import android.widget.Toast;
 
 import java.util.Random;
 
+import su.whs.hyphens.HyphenLineBreaker;
 import su.whs.watl.text.HtmlTagHandler;
-import su.whs.watl.text.HyphenLineBreaker;
-import su.whs.watl.text.hyphen.HyphenPattern;
-import su.whs.watl.text.hyphen.PatternsLoader;
 import su.whs.watl.ui.TextViewEx;
 import su.whs.watl.ui.TextViewLayoutListener;
 
@@ -44,10 +43,18 @@ public class RecyclerViewActivity extends ActionBarActivity {
     protected void onStart() {
         super.onStart();
         new AsyncTask<Void,Void,Void>() {
+            private Context mContext;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                mContext = RecyclerViewActivity.this.getApplicationContext();
+            }
 
             @Override
             protected Void doInBackground(Void... params) {
                 mContent = makeSpanned();
+                HyphenLineBreaker.require(mContext,"en_us","ru");
                 return null;
             }
 
@@ -64,10 +71,8 @@ public class RecyclerViewActivity extends ActionBarActivity {
         return true;
     }
 
-    HyphenPattern pat;
 
     RecyclerView.Adapter makeAdapter() {
-        pat = PatternsLoader.getInstance(this).getHyphenPatternAssets("en_us.hyphen.dat");
         final Record[] records = new Record[10000];
         for (int i=0; i<records.length; i++)
             records[i] = makeFakeRecord(i);
@@ -133,7 +138,7 @@ public class RecyclerViewActivity extends ActionBarActivity {
             drawable = (ImageView) itemView.findViewById(R.id.image);
             drawable.setImageDrawable(new ColorDrawable(randomRgb()));
             boolean isAsync = snippet.getOptions().isAsyncReflow();
-            snippet.getOptions().setLineBreaker(HyphenLineBreaker.getInstance(pat));
+            snippet.getOptions().setLineBreaker(HyphenLineBreaker.getInstance(itemView.getContext(),"en_us"));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

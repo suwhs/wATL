@@ -16,10 +16,8 @@ import android.view.MenuItem;
 import java.io.IOException;
 import java.io.InputStream;
 
+import su.whs.hyphens.HyphenLineBreaker;
 import su.whs.watl.text.HtmlTagHandler;
-import su.whs.watl.text.HyphenLineBreaker;
-import su.whs.watl.text.hyphen.HyphenPattern;
-import su.whs.watl.text.hyphen.PatternsLoader;
 import su.whs.watl.ui.MultiColumnTextViewEx;
 
 
@@ -60,8 +58,7 @@ public class MultiColumnTextViewExActivity extends ActionBarActivity {
         tv.setTextIsSelectable(true);
         if (Build.VERSION.SDK_INT>10)
             tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
-        HyphenPattern pat = PatternsLoader.getInstance(this).getHyphenPatternAssets("en_us.hyphen.dat");
-        tv.getOptions().setLineBreaker(HyphenLineBreaker.getInstance(pat)).setFilterEmptyLines(true);
+        tv.getOptions().setLineBreaker(HyphenLineBreaker.getInstance(this,"en_us")).setFilterEmptyLines(true);
     }
 
     @Override

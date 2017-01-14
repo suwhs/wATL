@@ -6,10 +6,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import su.whs.hyphens.HyphenLineBreaker;
 import su.whs.watl.text.ContentView;
-import su.whs.watl.text.HyphenLineBreaker;
-import su.whs.watl.text.hyphen.HyphenPattern;
-import su.whs.watl.text.hyphen.PatternsLoader;
 import su.whs.watl.ui.TextViewEx;
 
 
@@ -31,10 +29,10 @@ public class HyphenTextViewExActivity extends ActionBarActivity implements Artic
         tv.setTextIsSelectable(true);
         if (Build.VERSION.SDK_INT>10)
             tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
-        HyphenPattern pat = PatternsLoader.getInstance(this).getHyphenPatternAssets("en_us.hyphen.dat");
+
         ContentView.Options opt = tv.getOptions();
         // tv.getOptions()
-               opt.setLineBreaker(HyphenLineBreaker.getInstance(pat))
+               opt.setLineBreaker(HyphenLineBreaker.getInstance(this,"en_us"))
                        .setFilterEmptyLines(true);
                 // .setNewLineLeftMargin(20)
                 // .setNewLineTopMargin(8);

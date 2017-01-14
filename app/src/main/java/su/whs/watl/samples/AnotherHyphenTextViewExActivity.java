@@ -16,10 +16,8 @@ import android.view.MenuItem;
 import java.io.IOException;
 import java.io.InputStream;
 
+import su.whs.hyphens.HyphenLineBreaker;
 import su.whs.watl.text.HtmlTagHandler;
-import su.whs.watl.text.HyphenLineBreaker;
-import su.whs.watl.text.hyphen.HyphenPattern;
-import su.whs.watl.text.hyphen.PatternsLoader;
 import su.whs.watl.ui.TextViewEx;
 
 /**
@@ -71,10 +69,9 @@ public class AnotherHyphenTextViewExActivity extends ActionBarActivity {
         tv.setTextIsSelectable(true);
         if (Build.VERSION.SDK_INT>10)
             tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));
-        /** load patterns for english language **/
-        HyphenPattern pat = PatternsLoader.getInstance(this).getHyphenPatternAssets("en_us.hyphen.dat");
+
         /** create HyphenLineBreaker with preloaded patterns and assign it to TextViewEx **/
-        tv.getOptions().setLineBreaker(HyphenLineBreaker.getInstance(pat));
+        tv.getOptions().setLineBreaker(HyphenLineBreaker.getInstance(this,"en_us"));
         /* screenshoting */
         tv.getOptions()
                 /** configure line spacing multiplier **/
