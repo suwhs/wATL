@@ -8,7 +8,7 @@ package su.whs.syllabification.parent;
  *
  */
 
-public abstract class LineBreaker {
+public class LineBreaker {
     /**
      * LineBreaker interface
      *
@@ -20,8 +20,6 @@ public abstract class LineBreaker {
      */
 
     public static final int HYPHEN = 0xf0000000;
-
-    public abstract int nearestLineBreak(char[] text, int start, int end, int limit);
 
     public static int getPosition(int value) {
         return value & 0x0fffffff;
@@ -49,11 +47,23 @@ public abstract class LineBreaker {
     }
 
     public static boolean isPunktuation(char ch) {
-        return ch < 0x7e &&
+        return !isLetter(ch) && ch < 0x7e &&
                 (ch > 0x20 &&
                         (ch < 0x40 ||
                                 (ch > 0x5b &&
                                         (ch < 0x60 ||
                                                 ch > 0x7e))));
+    }
+
+    public int nearestLineBreak(char[] text, int start, int _end, int limit) {
+        int end = _end;
+
+        for (; end >= start; end--) {
+            if (text[end] == ' ' || text[end] == ',' || text[end] == '.' || text[end] == '!' || text[end] == '-' || text[end] == '?')
+                break;
+        }
+        if ((end > start - 1) && end < limit && Character.isLetter(text[end]) && Character.isLetter(text[end + 1]))
+            end = end | HYPHEN;
+        return end; // force break, if not fit
     }
 }

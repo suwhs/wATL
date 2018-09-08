@@ -1,5 +1,6 @@
 package su.whs.watl.samples;
 
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -27,6 +28,8 @@ public class TextViewExScrollActivity extends ActionBarActivity implements Artic
         setContentView(R.layout.activity_text_view_ex_scroll);
         /** find TextViewEx **/
         TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
+        Typeface font = Typeface.createFromAsset(tv.getContext().getAssets(), "fonts/GamjaFlower-Regular.ttf");
+        tv.setTypeface(font);
         /**
          * use article loader to assign content to TextViewEx
          * see setContent() method for this activity

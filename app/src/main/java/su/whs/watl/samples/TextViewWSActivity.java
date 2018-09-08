@@ -1,5 +1,6 @@
 package su.whs.watl.samples;
 
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -48,6 +49,8 @@ public class TextViewWSActivity extends ActionBarActivity implements ArticleView
     @Override
     public void setContent(String title, String author, String source, CharSequence content) {
         TextViewWS tv = (TextViewWS) findViewById(R.id.textView);
+        Typeface font = Typeface.createFromAsset(tv.getContext().getAssets(), "fonts/GamjaFlower-Regular.ttf");
+        tv.setTypeface(font);
         tv.setText(content);
 
         tv.setTextIsSelectable(true);

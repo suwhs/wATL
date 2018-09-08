@@ -162,12 +162,6 @@ public class ReverseLookupHyphenator {
     public int nearestLineBreak(char[] text, int start, int end, int limit) {
         boolean letter = isLetter(text[end]);
         if (letter && (end-start)<4) return start;
-//        System.out.printf("nearest: start = %d, end = %d, limit = %d\n",start,end,limit);
-//        LastQueryCache cache = lookupCache(text,start,end,limit, mCache);
-//        if (letter && null!=cache) {
-//            int r = nearestLineBreakFromCache(text, cache.wstart, end, limit);
-//            return r | (r < limit && cache.hyphens[r-cache.wstart+1]==1 ? HYPHEN : 0);
-//        }
         if (letter && (end - start) > 1 && (limit - end) > 1) {
             LastQueryCache cache = new LastQueryCache();
             int wstart = firstNonLetterBackward(text, start, end) + 1;
@@ -264,11 +258,8 @@ public class ReverseLookupHyphenator {
      * @return word begin, start or -1 if start == 0
      */
     private static int firstNonLetterBackward(char[] text, int start, int end) {
-//        String sub = new String(text).substring(start, end);
         for (; end > start; end--) {
-            // if (!Character.isLetter(text[end])) return end;
             if (!nonbreak(text[end]) || text[end] == '-') {
-//                sub = new String(text).substring(start, end);
                 return end;
             }
         }

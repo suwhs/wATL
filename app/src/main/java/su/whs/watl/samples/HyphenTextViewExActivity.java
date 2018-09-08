@@ -1,5 +1,6 @@
 package su.whs.watl.samples;
 
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -25,7 +26,8 @@ public class HyphenTextViewExActivity extends ActionBarActivity implements Artic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hyphen_text_view_ex);
         TextViewEx tv = (TextViewEx) findViewById(R.id.textView);
-
+        Typeface font = Typeface.createFromAsset(tv.getContext().getAssets(), "fonts/GamjaFlower-Regular.ttf");
+        tv.setTypeface(font);
         tv.setTextIsSelectable(true);
         if (Build.VERSION.SDK_INT>10)
             tv.setCustomSelectionActionModeCallback(new SampleActionModeCallback(tv));

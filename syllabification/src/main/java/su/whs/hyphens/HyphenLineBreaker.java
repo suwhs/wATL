@@ -64,7 +64,8 @@ public class HyphenLineBreaker extends LineBreaker {
 
     @Override
     public int nearestLineBreak(char[] text, int start, int end, int limit) {
-        return mHyphenator.nearestLineBreak(text, start, end, limit);
+        int result = mHyphenator.nearestLineBreak(text, start, end, limit) - 1; // correct to wATLlib compatibility prior to 1.4
+        return result;
     }
 
     private static class DefaultLineBreaker extends LineBreaker {

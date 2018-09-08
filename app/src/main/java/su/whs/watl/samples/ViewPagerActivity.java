@@ -8,6 +8,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -112,6 +113,7 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
             // layout.setBackgroundColor(getResources().getColor(android.R.color.black)); // set background for buggy android versions
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
                 tve.setColumnsCount(2);
+            // DEV setTypeface not working here
             return layout;
         }
     }
@@ -146,6 +148,10 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
                 .setFilterEmptyLines(true)
                 /* set paddings for text content */
                 .setTextPaddings(5,5,5,5);
+
+        Typeface font = Typeface.createFromAsset(mPager.getContext().getAssets(), "fonts/GamjaFlower-Regular.ttf");
+//        mAdapter.getTextLayout().setTypeface(font);
+        mAdapter.setTypeface(font);
         mOptionsHandler = new TextOptionsHandler(this,mAdapter);
         mPager.setAdapter(mAdapter);
         if (Build.VERSION.SDK_INT>10) {

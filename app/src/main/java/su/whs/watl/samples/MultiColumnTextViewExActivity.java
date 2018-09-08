@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -28,6 +29,8 @@ public class MultiColumnTextViewExActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multi_column_text_view_ex);
         MultiColumnTextViewEx tv = (MultiColumnTextViewEx) findViewById(R.id.textView);
+        Typeface font = Typeface.createFromAsset(tv.getContext().getAssets(), "fonts/GamjaFlower-Regular.ttf");
+        tv.setTypeface(font);
         opts = new TextOptionsHandler(this,tv);
         CharSequence text = Html.fromHtml(SampleContent.get(), new Html.ImageGetter() {
             /**

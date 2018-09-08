@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -37,6 +38,8 @@ public class AnotherHyphenTextViewExActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hyphen_text_view_ex);
         tv = (TextViewEx) findViewById(R.id.textView);
+        Typeface font = Typeface.createFromAsset(tv.getContext().getAssets(), "fonts/GamjaFlower-Regular.ttf");
+        tv.setTypeface(font);
         /**
          * use stock Html.fromHtml with custom tag handler and image loader (loads images from assets folder)
          * **/
