@@ -5,7 +5,7 @@ NB: library itself hosted now in separate repository - <a href="https://github.c
 
 License
 ========= 
-GPL v3 
+APACHE LICENSE 2.0
 
 Description
 ======
