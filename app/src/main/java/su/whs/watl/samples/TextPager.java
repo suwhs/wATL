@@ -3,7 +3,7 @@ package su.whs.watl.samples;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.view.ViewPager;
+import androidx.core.view.ViewPager;
 import android.util.AttributeSet;
 
 /**

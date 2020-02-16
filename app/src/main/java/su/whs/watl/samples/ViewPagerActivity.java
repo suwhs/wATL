@@ -15,9 +15,9 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.view.ActionMode;
+import androidx.core.view.ViewPager;
+import androidx.appcompat.app.ActionBarActivity;
+import androidx.appcompat.view.ActionMode;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.util.SparseArray;
@@ -296,19 +296,19 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
         }.execute();
     }
 
-    private class PageActionModeCallback implements android.support.v7.view.ActionMode.Callback {
+    private class PageActionModeCallback implements androidx.appcompat.view.ActionMode.Callback {
         private ITextView mTextView;
         private PageActionModeCallback(ITextView textView) {
             mTextView = textView;
         }
         @Override
-        public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
+        public boolean onCreateActionMode(androidx.appcompat.view.ActionMode mode, Menu menu) {
             menu.add(0, android.R.id.copy, 0, "copy").setIcon(R.drawable.ic_action_name);
             return true;
         }
 
         @Override
-        public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
+        public boolean onPrepareActionMode(androidx.appcompat.view.ActionMode mode, Menu menu) {
             // Remove the "select all" option
             menu.removeItem(android.R.id.selectAll);
             // Remove the "cut" option
@@ -343,7 +343,7 @@ public class ViewPagerActivity extends ActionBarActivity implements ViewPager.On
         }
 
         @Override
-        public void onDestroyActionMode(android.support.v7.view.ActionMode mode) {
+        public void onDestroyActionMode(androidx.appcompat.view.ActionMode mode) {
 
         }
     }

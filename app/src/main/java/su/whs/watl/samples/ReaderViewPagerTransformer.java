@@ -3,7 +3,7 @@ package su.whs.watl.samples;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.support.v4.view.ViewPager;
+import androidx.core.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 /*

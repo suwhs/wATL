@@ -11,7 +11,7 @@ import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import androidx.appcompat.app.ActionBarActivity;
 import android.text.style.DynamicDrawableSpan;
 import android.view.Menu;
 import android.view.MenuItem;

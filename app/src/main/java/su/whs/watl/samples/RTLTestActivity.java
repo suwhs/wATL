@@ -2,7 +2,7 @@ package su.whs.watl.samples;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import androidx.appcompat.app.ActionBarActivity;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.view.Menu;

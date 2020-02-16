@@ -12,7 +12,7 @@ android {
     buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "su.whs.watl.samples"
-        minSdkVersion 9
+        minSdkVersion 14
         targetSdkVersion 23
         versionCode 8
         versionName "1.2.2"
@@ -33,14 +33,14 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.4.0'
+//    compile 'com.android.support:appcompat-v7:23.4.0'
 //     compile project(':wlazydrawable')
      compile project(':wATLlib')
     compile project(':whsutils')
-    compile 'com.android.support:support-v4:23.4.0'
+    compile 'androidx.legacy:legacy-support-v4:1.0.0'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
     //compile 'su.whs:wATLlib:1.2.3.2'
-    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'androidx.recyclerview:recyclerview:1.0.0'
     compile 'su.whs:wlazydrawable:1.0.1'
     compile project(':syllabification')
 //    compile 'su.whs:syllabification:1.3'

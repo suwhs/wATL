@@ -1,1 +1,1 @@
-include ':whsutils', ':app', ':wlazydrawable-parent', ':wATLlib', ':wlazydrawable', ':mediaview', ':syllabification', ':syllabification-parent', ':hyphenation-rules', ':htmlparser'
+include ':whsutils', ':app', ':wlazydrawable-parent', ':wATLlib', ':wlazydrawable', ':mediaview', ':syllabification', ':syllabification-parent', ':hyphenation-rules'

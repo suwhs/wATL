@@ -34,7 +34,7 @@ wATLlib published on jcenter repository, so just
 
 add to dependencies :
 ```gradle
-compile 'su.whs:wATLlib:1.2.3'
+compile 'su.whs:wATLlib:1.1.7a'
 ```
 
 
